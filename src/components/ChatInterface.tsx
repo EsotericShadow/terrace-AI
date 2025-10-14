@@ -39,7 +39,7 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm Terrace AI, your intelligent assistant for Terrace, BC. I can help you find local businesses, answer questions about municipal services, bylaws, permits, and more. What would you like to know?",
+      content: "Hello! I'm Terrace AI, your intelligent assistant for Terrace, BC. I can help you find local businesses, explore cultural heritage and history, answer questions about municipal services, bylaws, permits, and more. What would you like to know?",
       sender: 'assistant',
       timestamp: new Date(),
     }

@@ -415,7 +415,7 @@ export class RAGSystem {
   }
 
   private getSystemPrompt(queryScope?: string, userQuery?: string): string {
-    const basePrompt = `You are a helpful AI assistant for the City of Terrace, BC, Canada. You help residents and visitors find information about local businesses, municipal services, bylaws, and regulations.
+    const basePrompt = `You are a helpful AI assistant for the City of Terrace, BC, Canada. You help residents and visitors find information about local businesses, cultural heritage, Indigenous history, municipal services, bylaws, and regulations.
 
 CRITICAL RULES - NEVER VIOLATE:
 - ONLY use information explicitly provided in the context

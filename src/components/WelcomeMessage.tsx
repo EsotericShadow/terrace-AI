@@ -25,7 +25,7 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
-          Your intelligent assistant for discovering local businesses and accessing municipal information in Terrace, BC.
+          Your intelligent assistant for discovering local businesses, exploring cultural heritage, and accessing municipal information in Terrace, BC.
         </p>
         
         <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
