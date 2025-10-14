@@ -41,6 +41,10 @@ const ORCHESTRATOR_JSON_PROMPT = `You are a query analyzer for Terrace municipal
 CRITICAL RULES:
 - Business queries (find restaurant, contractor, plumber, HVAC, store, shop, etc) → intent="business_search", queryType="business_directory"
 - Municipal queries (bylaws, permits, taxes, regulations, etc) → intent="info_request", queryType="municipal_procedure"
+- FOLLOW-UP queries: Look at conversation history to resolve ambiguous references
+  * "how much is it?" after dog license discussion → expand to "dog license cost"
+  * "what are their hours?" after business mention → expand to "{business name} hours"
+  * "where is it?" after location discussion → expand to "{place} location"
 - Return ONLY the JSON object, no explanations or additional text
 
 Required JSON structure:
@@ -48,7 +52,7 @@ Required JSON structure:
   "keywords": ["extracted", "keywords"],
   "intent": "business_search or info_request or complaint or permit or fee or contact",
   "queryType": "business_directory or municipal_procedure or bylaw or permit or financial",
-  "searchTerms": "expanded search terms with synonyms",
+  "searchTerms": "expanded search terms with synonyms (resolve pronouns using conversation history)",
   "categoryHints": ["relevant", "categories"],
   "conversationContext": "new_topic or followup or clarification",
   "queryScope": "specific_business or general_category or information"
@@ -59,7 +63,10 @@ Query: "Find HVAC contractors"
 {"keywords":["HVAC","contractors"],"intent":"business_search","queryType":"business_directory","searchTerms":"HVAC heating cooling contractors air conditioning","categoryHints":["business_economy"],"conversationContext":"new_topic","queryScope":"general_category"}
 
 Query: "What are noise bylaws?"
-{"keywords":["noise","bylaws"],"intent":"info_request","queryType":"bylaw","searchTerms":"noise control bylaw regulations quiet hours","categoryHints":["bylaws"],"conversationContext":"new_topic","queryScope":"information"}`;
+{"keywords":["noise","bylaws"],"intent":"info_request","queryType":"bylaw","searchTerms":"noise control bylaw regulations quiet hours","categoryHints":["bylaws"],"conversationContext":"new_topic","queryScope":"information"}
+
+Query: "how much is it?" (after discussing dog license)
+{"keywords":["cost","fee","dog","license"],"intent":"info_request","queryType":"financial","searchTerms":"dog license cost fee price animal control","categoryHints":["bylaws"],"conversationContext":"followup","queryScope":"information"}`;
 
 export class OrchestratorXAI {
   private llmClient: XAIClient | GroqClient;
@@ -81,10 +88,14 @@ export class OrchestratorXAI {
     return recent
       .map((turn, idx) => {
         const offset = idx - recent.length;
-        const docs = turn.retrievedDocs.length > 0 ? ` docs=${turn.retrievedDocs.slice(0, 2).join(',')}` : '';
-        return `TURN_${offset}: query="${turn.query}"${docs}`;
+        // Include both query AND response summary for context
+        const responseSummary = turn.response.length > 150 
+          ? turn.response.substring(0, 150).trim() + '...' 
+          : turn.response;
+        const docs = turn.retrievedDocs.length > 0 ? ` | retrieved_docs=[${turn.retrievedDocs.slice(0, 2).join(', ')}]` : '';
+        return `TURN_${offset}:\n  User: "${turn.query}"\n  AI: "${responseSummary}"${docs}`;
       })
-      .join('\n');
+      .join('\n\n');
   }
 
   private parseJSONOutput(jsonText: string): OrchestratorOutput {
@@ -408,10 +419,18 @@ export class OrchestratorXAI {
 
     const contextPEL = this.buildConversationContext(conversationHistory);
 
-    const userMessage = `USER_QUERY: ${enhancedQuery}
-CONVERSATION_HISTORY: ${contextPEL}
+    const userMessage = contextPEL !== 'none'
+      ? `CONVERSATION_HISTORY:
+${contextPEL}
 
-Analyze the query and output the structured format.`;
+CURRENT_USER_QUERY: ${enhancedQuery}
+
+INSTRUCTIONS: If the current query contains pronouns/ambiguous references (it, they, that, this, etc.) or is incomplete (like "how much?"), use the conversation history to resolve what the user is referring to. Expand the searchTerms to include the full context.
+
+Output JSON:`
+      : `USER_QUERY: ${enhancedQuery}
+
+Output JSON:`;
 
     try {
       const response = await this.llmClient.createChatCompletion(
