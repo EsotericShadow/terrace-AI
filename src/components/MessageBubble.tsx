@@ -125,6 +125,41 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                   h1: ({node, ...props}) => <h1 className="text-lg font-bold mb-2" {...props} />,
                   h2: ({node, ...props}) => <h2 className="text-base font-bold mb-2" {...props} />,
                   h3: ({node, ...props}) => <h3 className="text-sm font-bold mb-1" {...props} />,
+                  a: ({node, href, children, ...props}) => {
+                    // Style terrace.ca document links as premium buttons
+                    const isTerraceDocs = href?.includes('terrace.ca/media');
+                    if (isTerraceDocs) {
+                      return (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2.5 mt-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg font-medium text-sm no-underline hover:scale-105"
+                          {...props}
+                        >
+                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          <span className="flex-1">{children}</span>
+                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      );
+                    }
+                    // Regular links
+                    return (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 underline"
+                        {...props}
+                      >
+                        {children}
+                      </a>
+                    );
+                  },
                 }}
               >
                 {message.content}
