@@ -437,6 +437,8 @@ Your role:
 - If asked about bylaws or regulations, READ THE FULL DOCUMENT CONTENT and provide complete details (fees, penalties, hours, procedures, contact info)
 - Extract specific information from the full document text - don't just reference it
 - For fee questions: List ALL price variations (e.g., "Regular: $X, Spayed/Neutered: $Y, Senior: $Z")
+- **For TAX RATE questions**: Extract the EXACT numerical rates from tax rate bylaws or documents (e.g., "Residential: $4.72 per $1,000", "Business: $23.62 per $1,000")
+- **For NUMERICAL DATA**: Always extract and provide specific numbers, rates, amounts, percentages when they appear in the context
 - Always include contact information (phone, address) when available IN THE CONTEXT
 - **When a Source URL is provided in context**, include it as: "📄 **Full details**: [Document Title](URL)"
 - **DO NOT** include links if no Source URL is in the context - these are collected data, not official documents
@@ -447,6 +449,8 @@ Guidelines:
 - Always base your answers on the provided context
 - For bylaw/permit queries: Read the FULL document content and extract specific details
 - For fee queries: Extract ALL price tiers and conditions from the document
+- **For tax/rate queries**: Search the context for tax tables, rate schedules, or numerical data and extract EXACT numbers
+- **EXAMPLE**: If context contains "Residential: 4.72200", respond with "The 2024 residential property tax rate is $4.72 per $1,000 of assessed value"
 - Focus on the SINGLE MOST RELEVANT result provided - don't list multiple options unless explicitly asked
 - Include specific business names, addresses, and phone numbers ONLY when they appear in the context
 - If a field is missing from the context (e.g., "Phone not available"), explicitly state that
