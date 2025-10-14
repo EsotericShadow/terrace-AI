@@ -156,9 +156,9 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full max-h-[calc(100vh-200px)]">
-      {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex flex-col h-full max-h-[calc(100vh-140px)] sm:max-h-[calc(100vh-160px)]">
+      {/* Messages Container - Mobile optimized */}
+      <div className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
         ))}
@@ -167,11 +167,11 @@ export default function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Container - Premium ChatGPT style */}
-      <div className="border-t border-gray-200/50 bg-white/70 backdrop-blur-2xl p-6">
+      {/* Input Container - Mobile-first */}
+      <div className="border-t border-gray-200/50 bg-white/70 backdrop-blur-2xl p-3 sm:p-6 safe-area-inset-bottom">
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            <div className="flex items-end gap-3 bg-white rounded-3xl shadow-xl border border-gray-200 p-2 focus-within:ring-2 focus-within:ring-terrace-500/30 focus-within:border-terrace-400 focus-within:shadow-2xl transition-all duration-300">
+            <div className="flex items-end gap-2 sm:gap-3 bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-200 p-1.5 sm:p-2 focus-within:ring-2 focus-within:ring-terrace-500/30 focus-within:border-terrace-400 focus-within:shadow-2xl transition-all duration-300">
               <textarea
                 ref={inputRef}
                 value={inputValue}
@@ -183,11 +183,11 @@ export default function ChatInterface() {
                   }
                 }}
                 placeholder="Ask anything about Terrace..."
-                className="flex-1 px-5 py-4 bg-transparent focus:outline-none resize-none text-gray-900 placeholder:text-gray-400 text-base"
+                className="flex-1 px-3 sm:px-5 py-3 sm:py-4 bg-transparent focus:outline-none resize-none text-gray-900 placeholder:text-gray-400 text-sm sm:text-base"
                 rows={1}
                 disabled={isLoading}
                 style={{
-                  minHeight: '52px',
+                  minHeight: '48px',
                   maxHeight: '200px',
                 }}
               />
@@ -195,7 +195,7 @@ export default function ChatInterface() {
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isLoading}
-                className="flex-shrink-0 w-11 h-11 bg-gradient-to-br from-terrace-600 to-mountain-600 text-white rounded-2xl hover:shadow-lg hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center"
+                className="flex-shrink-0 w-12 h-12 sm:w-11 sm:h-11 bg-gradient-to-br from-terrace-600 to-mountain-600 text-white rounded-xl sm:rounded-2xl hover:shadow-lg hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center"
                 aria-label="Send message"
               >
                 {isLoading ? (
@@ -207,7 +207,7 @@ export default function ChatInterface() {
             </div>
           </div>
           
-          <div className="text-xs text-gray-400 mt-4 text-center flex items-center justify-center gap-3">
+          <div className="text-xs text-gray-400 mt-2 sm:mt-4 text-center flex items-center justify-center gap-2 sm:gap-3">
             <div className="flex items-center gap-1.5">
               <div className={`w-1.5 h-1.5 rounded-full ${isLoading ? 'bg-terrace-500 animate-pulse' : 'bg-green-500'}`}></div>
               <span className="font-medium text-gray-500">{isLoading ? 'Thinking' : 'Ready'}</span>
@@ -215,7 +215,8 @@ export default function ChatInterface() {
             {messages.length > 1 && (
               <>
                 <span className="text-gray-300">•</span>
-                <span>{messages.length - 1} {messages.length === 2 ? 'exchange' : 'exchanges'}</span>
+                <span className="hidden sm:inline">{messages.length - 1} {messages.length === 2 ? 'exchange' : 'exchanges'}</span>
+                <span className="sm:hidden">{messages.length - 1}</span>
               </>
             )}
           </div>

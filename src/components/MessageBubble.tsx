@@ -81,35 +81,35 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-slide-up group`}>
-      <div className={`flex items-start space-x-3 max-w-[80%] ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
-        {/* Avatar */}
-        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+      <div className={`flex items-start space-x-2 sm:space-x-3 max-w-[95%] sm:max-w-[85%] md:max-w-[80%] ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
+        {/* Avatar - Smaller on mobile */}
+        <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
           isUser 
             ? 'bg-terrace-600 text-white' 
             : 'bg-gradient-terrace text-white'
         }`}>
-          {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
+          {isUser ? <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
         </div>
 
         {/* Message Content */}
         <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} relative`}>
-          {/* Feedback Flag Button (only for AI messages) */}
+          {/* Feedback Flag Button (desktop only) */}
           {!isUser && (
             <button
               onClick={() => setShowFeedback(!showFeedback)}
-              className="absolute -right-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-1.5 shadow-md hover:shadow-lg border border-gray-200 z-10"
+              className="hidden md:block absolute -right-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-1.5 shadow-md hover:shadow-lg border border-gray-200 z-10"
               title="Report an issue or suggest improvement"
             >
               <Flag className="h-3.5 w-3.5 text-gray-600 hover:text-terrace-600" />
             </button>
           )}
 
-          <div className={`px-4 py-3 rounded-2xl ${
+          <div className={`px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl ${
             isUser
               ? 'bg-terrace-600 text-white rounded-br-md'
               : 'bg-white/90 backdrop-blur-sm text-gray-900 rounded-bl-md border border-gray-200'
           }`}>
-            <div className={`text-sm leading-relaxed prose prose-sm max-w-none ${
+            <div className={`text-xs sm:text-sm leading-relaxed prose prose-sm max-w-none ${
               isUser ? 'prose-invert' : ''
             }`}>
               <ReactMarkdown 
@@ -134,14 +134,14 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2.5 mt-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg font-medium text-sm no-underline hover:scale-105"
+                          className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 mt-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg sm:rounded-xl hover:from-blue-700 hover:to-blue-800 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg font-medium text-xs sm:text-sm no-underline hover:scale-105 min-h-[44px]"
                           {...props}
                         >
-                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
-                          <span className="flex-1">{children}</span>
-                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <span className="flex-1 break-words">{children}</span>
+                          <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                         </a>
