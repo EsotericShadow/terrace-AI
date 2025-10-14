@@ -35,11 +35,31 @@ interface Message {
   sources?: number;
 }
 
+// Land acknowledgement variations - respectfully honoring Indigenous territories
+const LAND_ACKNOWLEDGEMENTS = [
+  "I acknowledge that it is an honour to live and work on the Laxyuubm Tsimshian, Kitsumkalum and Kitselas, toyaxsuut nuusm.",
+  "I acknowledge with respect that we gather on the traditional, ancestral, and unceded territories of the Tsimshian Nation, specifically the Kitselas and Kitsumkalum peoples, who have stewarded this land since time immemorial.",
+  "I am grateful to live and work on the unceded territories of the Kitselas and Kitsumkalum peoples of the Tsimshian Nation, whose deep connection to this land continues to shape our community.",
+  "I honour the Kitselas and Kitsumkalum peoples of the Tsimshian Nation, on whose traditional and unceded territories we gather, recognizing their rich cultural heritage and enduring presence.",
+  "I acknowledge that Terrace is situated on the ancestral lands of the Tsimshian Nation, specifically the Kitselas and Kitsumkalum peoples, and commit to learning from their wisdom and stewardship.",
+  "I respectfully acknowledge the Kitselas and Kitsumkalum peoples as the original caretakers of these lands, and honour their millennia of stewardship of the territory we now call Terrace.",
+  "I acknowledge with humility that we are on the unceded territories of the Tsimshian Nation, where Kitselas and Kitsumkalum peoples have lived, thrived, and governed for thousands of years.",
+  "I recognize that we live and work on the traditional territories of the Kitselas and Kitsumkalum peoples of the Tsimshian Nation, and honor their ongoing relationship with this land.",
+  "I acknowledge the Kitselas and Kitsumkalum peoples of the Tsimshian Nation, on whose unceded territories Terrace stands, and whose cultural practices continue to enrich this region.",
+  "I honour the Kitselas and Kitsumkalum peoples of the Tsimshian Nation, the traditional stewards of this land."
+];
+
 export default function ChatInterface() {
+  // Select a random land acknowledgement for this session
+  const [landAcknowledgement] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * LAND_ACKNOWLEDGEMENTS.length);
+    return LAND_ACKNOWLEDGEMENTS[randomIndex];
+  });
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm Terrace AI, your intelligent assistant for Terrace, BC. I can help you find local businesses, explore cultural heritage and history, answer questions about municipal services, bylaws, permits, and more. What would you like to know?",
+      content: `Hello! I'm Terrace AI, your intelligent assistant for Terrace, BC. I can help you find local businesses, explore cultural heritage and history, answer questions about municipal services, bylaws, permits, and more.\n\n${landAcknowledgement}`,
       sender: 'assistant',
       timestamp: new Date(),
     }
