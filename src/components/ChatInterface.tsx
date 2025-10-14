@@ -183,12 +183,13 @@ export default function ChatInterface() {
                   }
                 }}
                 placeholder="Ask anything about Terrace..."
-                className="flex-1 px-3 sm:px-5 py-3 sm:py-4 bg-transparent focus:outline-none resize-none text-gray-900 placeholder:text-gray-400 text-sm sm:text-base"
+                className="flex-1 px-3 sm:px-5 py-3 sm:py-4 bg-transparent focus:outline-none resize-none text-gray-900 placeholder:text-gray-400 text-base leading-normal"
                 rows={1}
                 disabled={isLoading}
                 style={{
                   minHeight: '48px',
                   maxHeight: '200px',
+                  fontSize: '16px',
                 }}
               />
               

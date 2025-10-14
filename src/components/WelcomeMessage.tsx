@@ -45,6 +45,18 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
             <span>Instant Answers</span>
           </div>
         </div>
+
+        {/* Start Chat Button - IN HERO */}
+        <div className="pt-4 sm:pt-6">
+          <button
+            onClick={onStartChat}
+            className="group relative inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-terrace-600 to-mountain-600 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base hover:shadow-2xl hover:shadow-terrace-500/30 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl min-h-[48px]"
+          >
+            <MessageCircle className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2} />
+            <span>Start Chat</span>
+            <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
+        </div>
       </div>
 
       {/* Features Grid - Responsive */}
@@ -113,18 +125,6 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
             <div className="text-xs sm:text-sm text-gray-700 group-hover:text-gray-900">"Find restaurants and what are property taxes?"</div>
           </button>
         </div>
-      </div>
-
-      {/* Start Chat Button - Responsive */}
-      <div className="pt-6 sm:pt-8">
-        <button
-          onClick={onStartChat}
-          className="group relative inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-terrace-600 to-mountain-600 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base hover:shadow-2xl hover:shadow-terrace-500/30 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl min-h-[48px]"
-        >
-          <MessageCircle className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2} />
-          <span>Start Chat</span>
-          <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </button>
       </div>
 
       {/* Footer - Responsive */}
