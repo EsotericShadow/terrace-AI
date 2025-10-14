@@ -31,12 +31,12 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
         <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span>1,127 Businesses</span>
+            <span>1000+ Businesses</span>
           </div>
           <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <span>308 Documents</span>
+            <span>300+ Documents</span>
           </div>
           <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
           <div className="flex items-center gap-2">
