@@ -297,7 +297,62 @@ export class RAGSystem {
     return 'both';
   }
 
-  private buildContext(context: RAGContext): string {
+  private chunkDocument(content: string, chunkSize: number = 2000): string[] {
+    // Split document into semantic chunks (paragraphs, sections)
+    const paragraphs = content.split(/\n\n+/);
+    const chunks: string[] = [];
+    let currentChunk = '';
+    
+    for (const para of paragraphs) {
+      if ((currentChunk + para).length > chunkSize && currentChunk.length > 0) {
+        chunks.push(currentChunk.trim());
+        currentChunk = para;
+      } else {
+        currentChunk += (currentChunk ? '\n\n' : '') + para;
+      }
+    }
+    
+    if (currentChunk) {
+      chunks.push(currentChunk.trim());
+    }
+    
+    return chunks;
+  }
+
+  private findRelevantChunks(chunks: string[], userQuery: string, maxChunks: number = 3): string[] {
+    // Score each chunk by keyword relevance
+    const queryKeywords = userQuery.toLowerCase()
+      .split(/\s+/)
+      .filter(w => w.length > 3 && !['what', 'how', 'where', 'when', 'the', 'and', 'for'].includes(w));
+    
+    const scoredChunks = chunks.map((chunk, idx) => {
+      const chunkLower = chunk.toLowerCase();
+      let score = 0;
+      
+      // Score by keyword matches
+      queryKeywords.forEach(keyword => {
+        const matches = (chunkLower.match(new RegExp(keyword, 'g')) || []).length;
+        score += matches * 10;
+      });
+      
+      // Boost chunks with key information markers
+      if (/fee|cost|price|\$\d+|penalty|fine/i.test(chunk)) score += 20;
+      if (/contact|phone|email|address/i.test(chunk)) score += 15;
+      if (/procedure|process|step|how to|apply/i.test(chunk)) score += 15;
+      if (/prohibited|not allowed|must|shall|required/i.test(chunk)) score += 10;
+      
+      // Prefer chunks near the beginning (usually have definitions/overview)
+      if (idx < 3) score += 5;
+      
+      return { chunk, score, idx };
+    });
+    
+    // Sort by score and take top chunks
+    scoredChunks.sort((a, b) => b.score - a.score);
+    return scoredChunks.slice(0, maxChunks).map(sc => sc.chunk);
+  }
+
+  private buildContext(context: RAGContext, userQuery: string): string {
     let contextStr = '';
 
     if (context.businesses.length > 0) {
@@ -320,17 +375,18 @@ export class RAGSystem {
         contextStr += `${i + 1}. ${doc.title}\n`;
         contextStr += `   Category: ${doc.category}\n`;
         
-        // Use full content for detailed answers, but TRUNCATE if too large
-        // This prevents both "contact city hall" responses AND token limit errors
+        // Intelligently handle large documents with semantic chunking
         if (doc.fullContent && doc.fullContent.length > 100) {
-          // xAI limit is 131k tokens total (~520k chars)
-          // Keep documents under 50k chars each to be safe (allows 5 docs + system prompt)
-          const MAX_DOC_LENGTH = 50000;
+          const MAX_DOC_LENGTH = 40000; // Conservative limit per doc
           
           if (doc.fullContent.length > MAX_DOC_LENGTH) {
-            // Truncate but keep important parts
-            const truncated = doc.fullContent.substring(0, MAX_DOC_LENGTH);
-            contextStr += `   Full Content (truncated for length):\n${truncated}\n... [document continues, contact city hall for complete details]\n\n`;
+            // SMART APPROACH: Chunk and select most relevant
+            console.log(`  📄 Large document detected (${doc.fullContent.length} chars) - chunking...`);
+            const chunks = this.chunkDocument(doc.fullContent, 2000);
+            const relevantChunks = this.findRelevantChunks(chunks, userQuery, 3);
+            console.log(`  ✂️  Selected ${relevantChunks.length} most relevant chunks from ${chunks.length} total`);
+            
+            contextStr += `   Relevant Sections:\n${relevantChunks.join('\n\n---\n\n')}\n\n`;
           } else {
             contextStr += `   Full Content:\n${doc.fullContent}\n\n`;
           }
@@ -739,8 +795,8 @@ IMPORTANT - CONCISE SUMMARY MODE:
         }
       } // End of else block for context hit check
 
-      // Build context string
-      const contextStr = this.buildContext(context);
+      // Build context string (pass userQuery for intelligent chunking)
+      const contextStr = this.buildContext(context, userQuery);
 
       // STAGE 4: Generate response with xAI
       console.log('\n💬 STAGE 4: Generating response with xAI Grok...');
