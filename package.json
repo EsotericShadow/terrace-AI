@@ -1,0 +1,57 @@
+{
+  "name": "terrace-ai-chatbot",
+  "version": "1.0.0",
+  "description": "Terrace AI Chatbot - Next.js app with Weaviate RAG integration",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "weaviate:test": "tsx scripts/test-connection.ts",
+    "weaviate:setup": "tsx scripts/setup-schema.ts",
+    "weaviate:test-upload": "tsx scripts/test-upload.ts",
+    "weaviate:test-search": "tsx scripts/test-search.ts",
+    "weaviate:clear": "tsx scripts/clear-data.ts",
+    "weaviate:upload": "tsx scripts/upload-data.ts",
+    "weaviate:upload-terrace": "tsx scripts/upload-terrace-data.ts",
+    "weaviate:retry-failed": "tsx scripts/retry-failed.ts",
+    "weaviate:delete-duplicates": "tsx scripts/delete-duplicates.ts"
+  },
+  "dependencies": {
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.16",
+    "lucide-react": "^0.292.0",
+    "next": "^14.0.0",
+    "openai": "^4.20.0",
+    "postcss": "^8.4.31",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "stripe": "^14.9.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.2.0",
+    "uuid": "^13.0.0",
+    "weaviate-client": "^3.1.4"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "dotenv": "^16.4.0",
+    "eslint": "^8.52.0",
+    "eslint-config-next": "^14.0.0",
+    "tsx": "^4.7.0"
+  },
+  "keywords": [
+    "terrace-ai",
+    "chatbot",
+    "weaviate",
+    "rag",
+    "nextjs"
+  ],
+  "author": "Terrace AI",
+  "license": "MIT"
+}
