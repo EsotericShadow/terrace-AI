@@ -320,10 +320,20 @@ export class RAGSystem {
         contextStr += `${i + 1}. ${doc.title}\n`;
         contextStr += `   Category: ${doc.category}\n`;
         
-        // ALWAYS use FULL content for detailed answers (not just summaries)
-        // This prevents AI from saying "contact city hall" when we have the info
+        // Use full content for detailed answers, but TRUNCATE if too large
+        // This prevents both "contact city hall" responses AND token limit errors
         if (doc.fullContent && doc.fullContent.length > 100) {
-          contextStr += `   Full Content:\n${doc.fullContent}\n\n`;
+          // xAI limit is 131k tokens total (~520k chars)
+          // Keep documents under 50k chars each to be safe (allows 5 docs + system prompt)
+          const MAX_DOC_LENGTH = 50000;
+          
+          if (doc.fullContent.length > MAX_DOC_LENGTH) {
+            // Truncate but keep important parts
+            const truncated = doc.fullContent.substring(0, MAX_DOC_LENGTH);
+            contextStr += `   Full Content (truncated for length):\n${truncated}\n... [document continues, contact city hall for complete details]\n\n`;
+          } else {
+            contextStr += `   Full Content:\n${doc.fullContent}\n\n`;
+          }
         } else {
           contextStr += `   Summary: ${doc.summary}\n\n`;
         }
