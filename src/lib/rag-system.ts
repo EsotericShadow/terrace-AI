@@ -7,6 +7,7 @@ import { GroqClient } from './groq-client';  // NEW: Import Groq for cost-saving
 import { OrchestratorXAI, ConversationTurn } from './orchestrator-xai';
 import { DiscriminatorXAI, Candidate } from './discriminator-xai';
 import { SessionManager, BusinessData } from './session-manager';
+import { getDocumentUrl } from './document-urls';
 
 export interface RAGContext {
   businesses: Array<{
@@ -372,14 +373,24 @@ export class RAGSystem {
     if (context.documents.length > 0) {
       contextStr += '=== MUNICIPAL DOCUMENTS ===\n\n';
       context.documents.forEach((doc, i) => {
+        // Get the source URL for this document
+        const sourceUrl = getDocumentUrl(doc.title);
+        
         contextStr += `${i + 1}. ${doc.title}\n`;
         contextStr += `   Category: ${doc.category}\n`;
+        if (sourceUrl) {
+          contextStr += `   Source URL: ${sourceUrl} (ALWAYS include this link in your response)\n`;
+        }
         
         // Intelligently handle large documents with semantic chunking
         if (doc.fullContent && doc.fullContent.length > 100) {
           const MAX_DOC_LENGTH = 40000; // Conservative limit per doc
           
-          if (doc.fullContent.length > MAX_DOC_LENGTH) {
+          // Special handling for fee/cost queries - don't chunk fee schedules
+          const isFeeQuery = /cost|fee|price|how much|charge|rate|payment/i.test(userQuery);
+          const containsFees = doc.fullContent.includes('$') || /fee|cost|charge|rate/i.test(doc.title);
+          
+          if (doc.fullContent.length > MAX_DOC_LENGTH && !isFeeQuery) {
             // SMART APPROACH: Chunk and select most relevant
             console.log(`  📄 Large document detected (${doc.fullContent.length} chars) - chunking...`);
             const chunks = this.chunkDocument(doc.fullContent, 2000);
@@ -387,6 +398,10 @@ export class RAGSystem {
             console.log(`  ✂️  Selected ${relevantChunks.length} most relevant chunks from ${chunks.length} total`);
             
             contextStr += `   Relevant Sections:\n${relevantChunks.join('\n\n---\n\n')}\n\n`;
+          } else if (isFeeQuery && containsFees) {
+            // For fee queries, send the FULL document so AI sees all pricing tiers
+            console.log(`  💰 Fee query detected - sending full document for complete pricing`);
+            contextStr += `   Full Content (READ ALL PRICING TIERS):\n${doc.fullContent}\n\n`;
           } else {
             contextStr += `   Full Content:\n${doc.fullContent}\n\n`;
           }
@@ -410,23 +425,28 @@ CRITICAL RULES - NEVER VIOLATE:
 - NEVER fabricate addresses, phone numbers, hours, or any other details
 - NEVER tell users to "contact city hall" if the full document content contains the answer
 - The full bylaw/document content is provided - extract ALL relevant details from it
+- When answering fee/cost questions: Extract ALL pricing tiers, categories, and variations (e.g., spayed/neutered rates, senior rates, etc.)
+- ALWAYS include the source document link when referencing bylaws or official documents
 
 Your role:
 - Provide accurate, helpful information based ONLY on the context provided
 - If asked about businesses, answer based on the context provided
 - If asked about bylaws or regulations, READ THE FULL DOCUMENT CONTENT and provide complete details (fees, penalties, hours, procedures, contact info)
 - Extract specific information from the full document text - don't just reference it
+- For fee questions: List ALL price variations (e.g., "Regular: $X, Spayed/Neutered: $Y, Senior: $Z")
 - Always include contact information (phone, address) when available IN THE CONTEXT
+- Always include the document source link in markdown format: [Document Title](URL)
 - Be friendly, concise, and conversational
 - If the context doesn't contain enough information to answer the question, say so politely and clearly
 
 Guidelines:
 - Always base your answers on the provided context
 - For bylaw/permit queries: Read the FULL document content and extract specific details
+- For fee queries: Extract ALL price tiers and conditions from the document
 - Focus on the SINGLE MOST RELEVANT result provided - don't list multiple options unless explicitly asked
 - Include specific business names, addresses, and phone numbers ONLY when they appear in the context
 - If a field is missing from the context (e.g., "Phone not available"), explicitly state that
-- Cite document titles when referencing bylaws or regulations
+- Cite document titles when referencing bylaws or regulations, and include the source link if provided
 - Keep answers concise and focused on the top result
 - If the user wants more options, they will ask for "more" or "another"`;
 
