@@ -55,7 +55,7 @@ export default function ChatInterface() {
     return `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   });
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -147,38 +147,58 @@ export default function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Container */}
-      <div className="border-t border-gray-200 bg-white/80 backdrop-blur-sm p-4">
-        <div className="flex items-center space-x-3 max-w-4xl mx-auto">
-          <div className="flex-1 relative">
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Ask me anything about Terrace: businesses, bylaws, permits, recreation, and more..."
-              className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-terrace-500 focus:border-transparent bg-white/90 backdrop-blur-sm"
-              disabled={isLoading}
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={!inputValue.trim() || isLoading}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-terrace-600 hover:text-terrace-700 disabled:text-gray-400 disabled:cursor-not-allowed"
-            >
-              {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <Send className="h-5 w-5" />
-              )}
-            </button>
+      {/* Input Container - Premium ChatGPT style */}
+      <div className="border-t border-gray-200/50 bg-white/70 backdrop-blur-2xl p-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="relative">
+            <div className="flex items-end gap-3 bg-white rounded-3xl shadow-xl border border-gray-200 p-2 focus-within:ring-2 focus-within:ring-terrace-500/30 focus-within:border-terrace-400 focus-within:shadow-2xl transition-all duration-300">
+              <textarea
+                ref={inputRef}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+                placeholder="Ask anything about Terrace..."
+                className="flex-1 px-5 py-4 bg-transparent focus:outline-none resize-none text-gray-900 placeholder:text-gray-400 text-base"
+                rows={1}
+                disabled={isLoading}
+                style={{
+                  minHeight: '52px',
+                  maxHeight: '200px',
+                }}
+              />
+              
+              <button
+                onClick={handleSendMessage}
+                disabled={!inputValue.trim() || isLoading}
+                className="flex-shrink-0 w-11 h-11 bg-gradient-to-br from-terrace-600 to-mountain-600 text-white rounded-2xl hover:shadow-lg hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center"
+                aria-label="Send message"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" strokeWidth={2.5} />
+                ) : (
+                  <Send className="h-5 w-5" strokeWidth={2.5} />
+                )}
+              </button>
+            </div>
           </div>
-        </div>
-        
-        <div className="text-center mt-2">
-          <p className="text-xs text-gray-500">
-            Powered by xAI Grok • Weaviate Vector DB • {messages.length > 1 ? `${messages.length - 1} messages` : 'Ready'}
-          </p>
+          
+          <div className="text-xs text-gray-400 mt-4 text-center flex items-center justify-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <div className={`w-1.5 h-1.5 rounded-full ${isLoading ? 'bg-terrace-500 animate-pulse' : 'bg-green-500'}`}></div>
+              <span className="font-medium text-gray-500">{isLoading ? 'Thinking' : 'Ready'}</span>
+            </div>
+            {messages.length > 1 && (
+              <>
+                <span className="text-gray-300">•</span>
+                <span>{messages.length - 1} {messages.length === 2 ? 'exchange' : 'exchanges'}</span>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

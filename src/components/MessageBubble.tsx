@@ -1,6 +1,7 @@
 'use client';
 
-import { Bot, User, MapPin, Building2, Phone, FileText, AlertCircle } from 'lucide-react';
+import { Bot, User, MapPin, Building2, Phone, FileText, AlertCircle, Flag } from 'lucide-react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -40,12 +41,46 @@ interface MessageBubbleProps {
 
 export default function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.sender === 'user';
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<'correction' | 'addition' | 'wrong' | null>(null);
+  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  const handleSubmitFeedback = async () => {
+    if (!feedbackText.trim()) return;
+    
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: message.content,
+          feedbackType,
+          feedbackText,
+          businesses: message.businesses?.map(b => b.name) || [],
+          documents: message.documents?.map(d => d.title) || [],
+          timestamp: new Date().toISOString()
+        })
+      });
+      
+      setFeedbackSubmitted(true);
+      setTimeout(() => {
+        setShowFeedback(false);
+        setFeedbackSubmitted(false);
+        setFeedbackText('');
+        setFeedbackType(null);
+      }, 2000);
+    } catch (error) {
+      console.error('Failed to submit feedback:', error);
+    }
+  };
+
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-slide-up`}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-slide-up group`}>
       <div className={`flex items-start space-x-3 max-w-[80%] ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
         {/* Avatar */}
         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
@@ -57,7 +92,18 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
         </div>
 
         {/* Message Content */}
-        <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
+        <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} relative`}>
+          {/* Feedback Flag Button (only for AI messages) */}
+          {!isUser && (
+            <button
+              onClick={() => setShowFeedback(!showFeedback)}
+              className="absolute -right-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-1.5 shadow-md hover:shadow-lg border border-gray-200 z-10"
+              title="Report an issue or suggest improvement"
+            >
+              <Flag className="h-3.5 w-3.5 text-gray-600 hover:text-terrace-600" />
+            </button>
+          )}
+
           <div className={`px-4 py-3 rounded-2xl ${
             isUser
               ? 'bg-terrace-600 text-white rounded-br-md'
@@ -180,6 +226,94 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                   ))}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Feedback Form */}
+          {showFeedback && !isUser && (
+            <div className="mt-3 w-full max-w-2xl bg-white rounded-lg border border-gray-200 p-4 shadow-lg">
+              {feedbackSubmitted ? (
+                <div className="text-sm text-green-600 font-medium flex items-center">
+                  <AlertCircle className="h-4 w-4 mr-2" />
+                  Thank you! Your feedback helps us improve.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div className="text-sm font-medium text-gray-700">
+                    Help us improve! What's wrong or missing?
+                  </div>
+                  
+                  <div className="flex gap-2 flex-wrap">
+                    <button
+                      onClick={() => setFeedbackType('wrong')}
+                      className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
+                        feedbackType === 'wrong'
+                          ? 'bg-red-50 border-red-300 text-red-700'
+                          : 'bg-white border-gray-300 text-gray-700 hover:border-red-300'
+                      }`}
+                    >
+                      Incorrect Info
+                    </button>
+                    <button
+                      onClick={() => setFeedbackType('addition')}
+                      className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
+                        feedbackType === 'addition'
+                          ? 'bg-blue-50 border-blue-300 text-blue-700'
+                          : 'bg-white border-gray-300 text-gray-700 hover:border-blue-300'
+                      }`}
+                    >
+                      Missing Info
+                    </button>
+                    <button
+                      onClick={() => setFeedbackType('correction')}
+                      className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
+                        feedbackType === 'correction'
+                          ? 'bg-yellow-50 border-yellow-300 text-yellow-700'
+                          : 'bg-white border-gray-300 text-gray-700 hover:border-yellow-300'
+                      }`}
+                    >
+                      Needs Update
+                    </button>
+                  </div>
+
+                  {feedbackType && (
+                    <>
+                      <textarea
+                        value={feedbackText}
+                        onChange={(e) => setFeedbackText(e.target.value)}
+                        placeholder={
+                          feedbackType === 'wrong'
+                            ? "What information is incorrect? Please be specific..."
+                            : feedbackType === 'addition'
+                            ? "What information is missing? (e.g., phone number, hours, services...)"
+                            : "What needs to be updated?"
+                        }
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-terrace-500 focus:border-transparent resize-none"
+                        rows={3}
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleSubmitFeedback}
+                          disabled={!feedbackText.trim()}
+                          className="px-4 py-2 text-sm bg-terrace-600 text-white rounded-lg hover:bg-terrace-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                          Submit Feedback
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowFeedback(false);
+                            setFeedbackType(null);
+                            setFeedbackText('');
+                          }}
+                          className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
