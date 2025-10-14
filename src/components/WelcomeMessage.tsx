@@ -25,8 +25,8 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
         </h1>
         
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Your intelligent assistant for Terrace, BC business and community information. 
-          Powered by Llama 3.1 and Weaviate RAG technology.
+          Your intelligent assistant for Terrace, BC business and municipal information. 
+          Powered by advanced AI with access to 1,127 local businesses and 308 municipal documents.
         </p>
       </div>
 
@@ -42,17 +42,17 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
         
         <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:shadow-lg transition-all duration-300">
           <MapPin className="h-8 w-8 text-terrace-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Local Information</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Municipal Services</h3>
           <p className="text-gray-600">
-            Get answers about Terrace's community services, events, and local amenities.
+            Access bylaws, permits, procedures, and regulations with instant answers from official documents.
           </p>
         </div>
         
         <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:shadow-lg transition-all duration-300">
           <Users className="h-8 w-8 text-terrace-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Smart Assistant</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Intelligent Search</h3>
           <p className="text-gray-600">
-            Ask questions naturally and get intelligent responses powered by Llama 3.1 AI.
+            Multi-stage AI pipeline understands your intent and finds the most relevant information in seconds.
           </p>
         </div>
       </div>
@@ -62,13 +62,13 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Try asking:</h3>
         <div className="space-y-2 text-left">
           <div className="bg-white/60 rounded-lg p-3 text-sm">
-            "Where can I find a good restaurant in Terrace?"
+            "Find HVAC contractors in Terrace"
           </div>
           <div className="bg-white/60 rounded-lg p-3 text-sm">
-            "What automotive services are available?"
+            "What are the noise bylaws?"
           </div>
           <div className="bg-white/60 rounded-lg p-3 text-sm">
-            "Tell me about healthcare services in Terrace"
+            "How do I get a dog license?"
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
       <div className="pt-4">
         <button
           onClick={onStartChat}
-          className="bg-gradient-terrace text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 btn-hover"
+          className="bg-gradient-to-r from-terrace-600 to-mountain-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg"
         >
           Start Chatting with Terrace AI
         </button>
@@ -85,7 +85,7 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
 
       {/* Footer */}
       <div className="text-sm text-gray-500 pt-8">
-        <p>Powered by Llama 3.1 8B Instruct • Weaviate Vector Database • Terrace AI Dataset</p>
+        <p>Powered by Groq + xAI Grok • Weaviate Vector Search • 1,435 Searchable Records</p>
       </div>
     </div>
   );
