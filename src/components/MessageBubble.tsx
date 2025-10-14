@@ -104,24 +104,24 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
             </button>
           )}
 
-          <div className={`px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl ${
+          <div className={`px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl break-words overflow-hidden ${
             isUser
               ? 'bg-terrace-600 text-white rounded-br-md'
               : 'bg-white/90 backdrop-blur-sm text-gray-900 rounded-bl-md border border-gray-200'
           }`}>
-            <div className={`text-xs sm:text-sm leading-relaxed prose prose-sm max-w-none ${
+            <div className={`text-xs sm:text-sm leading-relaxed prose prose-sm max-w-none break-words ${
               isUser ? 'prose-invert' : ''
-            }`}>
+            }`} style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
-                  ul: ({node, ...props}) => <ul className="mb-2 ml-4 list-disc" {...props} />,
-                  ol: ({node, ...props}) => <ol className="mb-2 ml-4 list-decimal" {...props} />,
-                  li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                  strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
-                  em: ({node, ...props}) => <em className="italic" {...props} />,
-                  code: ({node, ...props}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-xs" {...props} />,
+                  p: ({node, ...props}) => <p className="mb-2 last:mb-0 break-words" {...props} />,
+                  ul: ({node, ...props}) => <ul className="mb-2 ml-4 list-disc break-words" {...props} />,
+                  ol: ({node, ...props}) => <ol className="mb-2 ml-4 list-decimal break-words" {...props} />,
+                  li: ({node, ...props}) => <li className="mb-1 break-words" {...props} />,
+                  strong: ({node, ...props}) => <strong className="font-semibold break-words" {...props} />,
+                  em: ({node, ...props}) => <em className="italic break-words" {...props} />,
+                  code: ({node, ...props}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-xs break-all" {...props} />,
                   h1: ({node, ...props}) => <h1 className="text-lg font-bold mb-2" {...props} />,
                   h2: ({node, ...props}) => <h2 className="text-base font-bold mb-2" {...props} />,
                   h3: ({node, ...props}) => <h3 className="text-sm font-bold mb-1" {...props} />,
@@ -153,7 +153,8 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 underline"
+                        className="text-blue-600 hover:text-blue-800 underline break-words"
+                        style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                         {...props}
                       >
                         {children}

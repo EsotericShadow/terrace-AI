@@ -158,7 +158,7 @@ export default function ChatInterface() {
   return (
     <div className="flex flex-col h-full max-h-[calc(100vh-140px)] sm:max-h-[calc(100vh-160px)]">
       {/* Messages Container - Mobile optimized */}
-      <div className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
         ))}
