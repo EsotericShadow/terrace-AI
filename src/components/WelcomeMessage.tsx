@@ -48,14 +48,23 @@ export default function WelcomeMessage({ onStartChat }: WelcomeMessageProps) {
 
         {/* Start Chat Button - IN HERO */}
         <div className="pt-4 sm:pt-6">
-          <button
-            onClick={onStartChat}
-            className="group relative inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-terrace-600 to-mountain-600 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base hover:shadow-2xl hover:shadow-terrace-500/30 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl min-h-[48px]"
-          >
-            <MessageCircle className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2} />
-            <span>Start Chat</span>
-            <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center">
+            <button
+              onClick={onStartChat}
+              className="group relative inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-terrace-600 to-mountain-600 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base hover:shadow-2xl hover:shadow-terrace-500/30 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl min-h-[48px]"
+            >
+              <MessageCircle className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2} />
+              <span>Start Chat</span>
+              <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
+            
+            <a
+              href="/future"
+              className="inline-flex items-center gap-2 bg-white text-terrace-600 border-2 border-terrace-600 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-medium text-sm sm:text-base hover:bg-terrace-50 transition-all shadow-md hover:shadow-lg min-h-[48px]"
+            >
+              🚀 Future Plans
+            </a>
+          </div>
         </div>
       </div>
 
