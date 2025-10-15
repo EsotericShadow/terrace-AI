@@ -116,3 +116,4 @@ The rest can be added when you implement Postgres integration.
 
 **Current Status:** Database configured, ready for future integration.
 
+

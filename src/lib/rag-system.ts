@@ -353,11 +353,72 @@ export class RAGSystem {
     return scoredChunks.slice(0, maxChunks).map(sc => sc.chunk);
   }
 
-  private buildContext(context: RAGContext, userQuery: string): string {
+  private async getBusinessOntology(category?: string): Promise<string> {
+    if (!this.weaviateClient || !category) return '';
+    
+    try {
+      const ontologyCollection = this.weaviateClient.collections.get('BusinessOntology');
+      const results = await ontologyCollection.query.fetchObjects({
+        filters: ontologyCollection.filter.byProperty('category').equal(category),
+        limit: 5
+      });
+      
+      if (results.objects.length > 0) {
+        let ontologyContext = '\n=== LOCAL CONTEXT & INTELLIGENCE ===\n\n';
+        results.objects.forEach((obj: any) => {
+          const props = obj.properties;
+          if (props.summary) {
+            ontologyContext += `${props.summary}\n`;
+          }
+        });
+        return ontologyContext;
+      }
+    } catch (error) {
+      // Collection might not exist yet, silently continue
+    }
+    return '';
+  }
+
+  private async getBylawMetadata(bylawNumber?: string): Promise<string> {
+    if (!this.weaviateClient) return '';
+    
+    try {
+      const metadataCollection = this.weaviateClient.collections.get('BylawMetadata');
+      const results = await metadataCollection.query.fetchObjects({ limit: 4 });
+      
+      if (results.objects.length > 0) {
+        let metaContext = '\n=== BYLAW SYSTEM CONTEXT ===\n\n';
+        results.objects.forEach((obj: any) => {
+          const props = obj.properties;
+          if (props.layer === 'ontology') {
+            metaContext += 'Regulatory Categories: ' + props.summary + '\n';
+          } else if (props.layer === 'temporal') {
+            metaContext += 'Historical Context: ' + props.summary + '\n';
+          }
+        });
+        return metaContext;
+      }
+    } catch (error) {
+      // Collection might not exist yet, silently continue
+    }
+    return '';
+  }
+
+  private async buildContext(context: RAGContext, userQuery: string): Promise<string> {
     let contextStr = '';
 
     if (context.businesses.length > 0) {
       contextStr += '=== BUSINESSES ===\n\n';
+      
+      // Extract category from businesses to get ontology
+      const category = context.businesses[0]?.category?.split('→')[0]?.trim();
+      if (category) {
+        const ontology = await this.getBusinessOntology(category);
+        if (ontology) {
+          contextStr += ontology + '\n';
+        }
+      }
+      
       context.businesses.forEach((biz, i) => {
         contextStr += `${i + 1}. ${biz.name}\n`;
         contextStr += `   Category: ${biz.category}\n`;
@@ -372,6 +433,16 @@ export class RAGSystem {
 
     if (context.documents.length > 0) {
       contextStr += '=== MUNICIPAL DOCUMENTS ===\n\n';
+      
+      // Check if we're dealing with bylaws to add metadata context
+      const hasBylaws = context.documents.some(d => d.category.includes('bylaw'));
+      if (hasBylaws) {
+        const bylawMeta = await this.getBylawMetadata();
+        if (bylawMeta) {
+          contextStr += bylawMeta + '\n';
+        }
+      }
+      
       context.documents.forEach((doc, i) => {
         // Get the source URL for this document
         const sourceUrl = getDocumentUrl(doc.title);
@@ -826,7 +897,7 @@ IMPORTANT - CONCISE SUMMARY MODE:
       } // End of else block for context hit check
 
       // Build context string (pass userQuery for intelligent chunking)
-      const contextStr = this.buildContext(context, userQuery);
+      const contextStr = await this.buildContext(context, userQuery);
 
       // STAGE 4: Generate response with xAI
       console.log('\n💬 STAGE 4: Generating response with xAI Grok...');
