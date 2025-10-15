@@ -41,6 +41,10 @@ const ORCHESTRATOR_JSON_PROMPT = `You are a query analyzer for Terrace municipal
 CRITICAL RULES:
 - Business queries (find restaurant, contractor, plumber, HVAC, store, shop, etc) → intent="business_search", queryType="business_directory"
 - Municipal queries (bylaws, permits, taxes, regulations, etc) → intent="info_request", queryType="municipal_procedure"
+- **EXCEPTION**: Questions about business licence/permit COSTS, FEES, or REQUIREMENTS → intent="info_request", queryType="financial" (search bylaws, NOT businesses!)
+  * "how much is a business licence?" → search Business Licence Consolidated Bylaw
+  * "what are business permit fees?" → search bylaw documents for fees
+  * "business licence cost" → search documents, not businesses
 - FOLLOW-UP queries: ALWAYS check conversation history to resolve ambiguous references
   * "how much is it?" after dog license discussion → expand to "dog license cost"
   * "do you need a license?" after dog discussion → expand to "dog license requirements" (NOT business license!)
@@ -66,6 +70,9 @@ Query: "Find HVAC contractors"
 
 Query: "What are noise bylaws?"
 {"keywords":["noise","bylaws"],"intent":"info_request","queryType":"bylaw","searchTerms":"noise control bylaw regulations quiet hours","categoryHints":["bylaws"],"conversationContext":"new_topic","queryScope":"information"}
+
+Query: "how much is a business licence?"
+{"keywords":["business","licence","cost","fee"],"intent":"info_request","queryType":"financial","searchTerms":"business licence fees cost bylaw schedule rates","categoryHints":["bylaws","municipal_bylaws"],"conversationContext":"new_topic","queryScope":"information"}
 
 Query: "how much is it?" (after discussing dog license)
 {"keywords":["cost","fee","dog","license"],"intent":"info_request","queryType":"financial","searchTerms":"dog license cost fee price animal control","categoryHints":["bylaws"],"conversationContext":"followup","queryScope":"information"}
