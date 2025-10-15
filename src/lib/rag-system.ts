@@ -504,10 +504,17 @@ CRITICAL RULES - NEVER VIOLATE:
 
 COMPREHENSIVE ANSWERS:
 - For "how to get" questions (e.g., "where can I get a dog?"): Provide ALL reasonable options:
-  * Official municipal processes (licensing, permits, applications)
-  * Local businesses that provide the service/product (if in context)
-  * Both purchasing AND regulatory requirements when applicable
-- Example: "where can I get a dog?" → Explain adoption options, pet stores (if in business context), AND licensing requirements
+  * List ALL relevant businesses in the context (not just one)
+  * Suggest official municipal services (animal shelter, adoption centers)
+  * Include regulatory requirements (licensing, permits)
+  * Be comprehensive - give users multiple pathways
+- Example: "where can I get a dog?" → List ALL pet stores in context + mention animal shelter adoption + licensing requirements
+
+CONTEXT ADHERENCE:
+- If the conversation history is about a SPECIFIC TOPIC (dogs, permits, parking, etc.), follow-up queries are ALWAYS about that topic
+- "do you need a license?" after dog discussion → ONLY talk about dog licensing, DO NOT mention business licensing
+- "how much is it?" after discussing fees → Give those specific fees, don't ask for clarification
+- Stay on topic until user explicitly changes topics
 
 Your role:
 - Provide accurate, helpful information based ONLY on the context provided
@@ -910,11 +917,25 @@ IMPORTANT - CONCISE SUMMARY MODE:
       console.log('\n💬 STAGE 4: Generating response with xAI Grok...');
       console.log(`  Query Scope: ${orchestratorOutput.queryScope}`);
       
-      // Get last entity for context-aware system prompt
-      const lastEntity = this.sessionManager.getLastEntity(sessionId);
-      const conversationContext = lastEntity && sessionContext.conversationHistory.length > 0
-        ? `\n\nCONVERSATION CONTEXT:\n- Previous topic discussed: ${lastEntity.entityName}\n- User is asking a FOLLOW-UP question about this topic\n- CRITICAL: Answer ONLY from the provided context documents\n- DO NOT switch topics or mention programs not in the context\n- If context lacks information, say "I don't have that information about ${lastEntity.entityName}"\n`
-        : '';
+      // Build rich conversation context for follow-up questions
+      let conversationContext = '';
+      if (sessionContext.conversationHistory.length > 0) {
+        const recentHistory = sessionContext.conversationHistory.slice(-2); // Last 2 turns
+        conversationContext = `\n\nCONVERSATION HISTORY (Recent turns):\n`;
+        recentHistory.forEach((turn, idx) => {
+          conversationContext += `Turn ${idx + 1}:\n`;
+          conversationContext += `  User asked: "${turn.query}"\n`;
+          conversationContext += `  AI responded about: ${turn.retrievedDocs.slice(0, 2).join(', ')}\n`;
+          const keyConcepts = turn.response.substring(0, 150).trim();
+          conversationContext += `  Key concepts: ${keyConcepts}...\n\n`;
+        });
+        conversationContext += `CURRENT QUERY: "${userQuery}"\n\n`;
+        conversationContext += `CRITICAL CONTEXT RULES:\n`;
+        conversationContext += `- If current query uses pronouns ("it", "they") or is vague ("how much?", "do you need a license?"), it refers to the PREVIOUS TOPIC\n`;
+        conversationContext += `- Stay on topic from conversation history\n`;
+        conversationContext += `- If previous topic was "dogs", follow-ups are about dogs (NOT business licensing!)\n`;
+        conversationContext += `- Extract specific answers from context documents - don't ask for clarification if you know the topic\n\n`;
+      }
       
       const answer = await this.generatorClient.generateResponse(
         this.getSystemPrompt(orchestratorOutput.queryScope, userQuery) + conversationContext,
