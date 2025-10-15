@@ -19,13 +19,8 @@
     "weaviate:retry-failed": "tsx scripts/retry-failed.ts",
     "weaviate:delete-duplicates": "tsx scripts/delete-duplicates.ts",
     "bylaws:replace": "tsx scripts/replace-bylaws.ts",
-    "metadata:merge": "tsx scripts/merge-enhanced-metadata.ts",
-    "metadata:test": "tsx scripts/test-metadata.ts",
-    "metadata:fix": "tsx scripts/fix-collections.ts",
-    "weaviate:check-duplicates": "tsx scripts/check-duplicates.ts",
-    "weaviate:clean-duplicates": "tsx scripts/clean-duplicate-businesses.ts",
     "bylaws:replace-old": "tsx scripts/replace-old-bylaws.ts",
-    "bylaws:clean-ocr": "tsx scripts/remove-old-ocr-bylaws.ts"
+    "metadata:merge": "tsx scripts/merge-enhanced-metadata.ts"
   },
   "dependencies": {
     "@types/glob": "^8.1.0",
