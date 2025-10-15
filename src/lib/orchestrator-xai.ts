@@ -41,10 +41,12 @@ const ORCHESTRATOR_JSON_PROMPT = `You are a query analyzer for Terrace municipal
 CRITICAL RULES:
 - Business queries (find restaurant, contractor, plumber, HVAC, store, shop, etc) → intent="business_search", queryType="business_directory"
 - Municipal queries (bylaws, permits, taxes, regulations, etc) → intent="info_request", queryType="municipal_procedure"
-- FOLLOW-UP queries: Look at conversation history to resolve ambiguous references
+- FOLLOW-UP queries: ALWAYS check conversation history to resolve ambiguous references
   * "how much is it?" after dog license discussion → expand to "dog license cost"
+  * "do you need a license?" after dog discussion → expand to "dog license requirements" (NOT business license!)
   * "what are their hours?" after business mention → expand to "{business name} hours"
   * "where is it?" after location discussion → expand to "{place} location"
+- CONTEXT PRIORITY: If conversation history shows user was discussing a specific topic (e.g., dogs, permits, a business), the follow-up query is ALWAYS about that same topic unless explicitly stated otherwise
 - Return ONLY the JSON object, no explanations or additional text
 
 Required JSON structure:
@@ -66,7 +68,13 @@ Query: "What are noise bylaws?"
 {"keywords":["noise","bylaws"],"intent":"info_request","queryType":"bylaw","searchTerms":"noise control bylaw regulations quiet hours","categoryHints":["bylaws"],"conversationContext":"new_topic","queryScope":"information"}
 
 Query: "how much is it?" (after discussing dog license)
-{"keywords":["cost","fee","dog","license"],"intent":"info_request","queryType":"financial","searchTerms":"dog license cost fee price animal control","categoryHints":["bylaws"],"conversationContext":"followup","queryScope":"information"}`;
+{"keywords":["cost","fee","dog","license"],"intent":"info_request","queryType":"financial","searchTerms":"dog license cost fee price animal control","categoryHints":["bylaws"],"conversationContext":"followup","queryScope":"information"}
+
+Query: "do you need a license?" (after discussing getting a dog)
+{"keywords":["license","dog","requirements"],"intent":"info_request","queryType":"municipal_procedure","searchTerms":"dog license requirements animal control bylaw","categoryHints":["bylaws"],"conversationContext":"followup","queryScope":"information"}
+
+Query: "where can I get a dog?"
+{"keywords":["get","dog","buy","adopt"],"intent":"business_search","queryType":"business_directory","searchTerms":"pet stores animal shelter dog adoption pet valu blue barn","categoryHints":["retail_shopping","pet_services"],"conversationContext":"new_topic","queryScope":"general_category","metadata":{"alsoSearchBylaws":true,"bylawTopics":["animal control","dog licensing"]}}`;
 
 export class OrchestratorXAI {
   private llmClient: XAIClient | GroqClient;
@@ -425,7 +433,13 @@ ${contextPEL}
 
 CURRENT_USER_QUERY: ${enhancedQuery}
 
-INSTRUCTIONS: If the current query contains pronouns/ambiguous references (it, they, that, this, etc.) or is incomplete (like "how much?"), use the conversation history to resolve what the user is referring to. Expand the searchTerms to include the full context.
+CRITICAL INSTRUCTIONS FOR FOLLOW-UP QUERIES:
+- If the query is vague or uses pronouns ("it", "they", "that") or is incomplete ("how much?", "do you need a license?"), it is ALWAYS referring to the topic in the conversation history
+- Look at what the user was asking about in TURN_-1 (most recent)
+- Expand searchTerms to include the SPECIFIC TOPIC from conversation history
+- Example: If user asked about "dogs" then asks "do you need a license?", expand to "dog license requirements" NOT "business license"
+- Example: If user asked about "permits" then asks "how much is it?", expand to "permit fees cost"
+- NEVER default to business licensing when the conversation is clearly about something else (dogs, permits, parking, etc.)
 
 Output JSON:`
       : `USER_QUERY: ${enhancedQuery}
