@@ -1,0 +1,25 @@
+🧪 COMPREHENSIVE PERSONA-BASED CONVERSATION TESTS
+
+Testing context retention, topic switching, and comprehensive answers
+
+
+================================================================================
+👤 PERSONA: New Dog Owner
+================================================================================
+
+
+📝 Turn 1: "I want to get a dog"
+   Expected topics: pet stores, animal shelter, licensing requirements
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:5738:19)
+    at successSteps (node:internal/deps/undici/undici:5719:27)
+    at fullyReadBody (node:internal/deps/undici/undici:4609:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async consumeBody (node:internal/deps/undici/undici:5728:7)
+    at async chat (/Users/main/Desktop/untitled folder/terrace_ai 2/terrace-ai-chatbot/test-personas.js:10:16)
+    at async testPersona (/Users/main/Desktop/untitled folder/terrace_ai 2/terrace-ai-chatbot/test-personas.js:31:22)
+    at async runAllTests (/Users/main/Desktop/untitled folder/terrace_ai 2/terrace-ai-chatbot/test-personas.js:47:3)

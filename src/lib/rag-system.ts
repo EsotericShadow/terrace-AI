@@ -138,34 +138,93 @@ export class RAGSystem {
       const client = await this.getWeaviateClient();
       const businessCollection = client.collections.get('Business');
 
-      const results = await businessCollection.query.nearText(query, {
-        limit: limit * 2, // Get more to account for duplicates
-        returnMetadata: ['distance'],
+      // ENHANCED: Expand query with synonyms and related terms
+      let enhancedQuery = query;
+      const queryLower = query.toLowerCase();
+      
+      // Auto repair / mechanic synonyms
+      if (/mechanic|auto repair|car fix|car repair|oil change/i.test(query)) {
+        enhancedQuery = `${query} auto repair mechanic tire service oil change brake repair automotive`;
+      }
+      // Grocery synonyms
+      else if (/grocery|groceries|supermarket|food store/i.test(query)) {
+        enhancedQuery = `${query} grocery supermarket food store safeway save-on walmart`;
+      }
+      // Restaurant synonyms
+      else if (/restaurant|dining|eat|food/i.test(query) && !/grocery|store/i.test(query)) {
+        enhancedQuery = `${query} restaurant dining cafe pub steakhouse cuisine`;
+      }
+      // Pet store synonyms
+      else if (/pet store|pet shop|dog|cat|animal/i.test(query) && /buy|purchase|get|store|shop/i.test(query)) {
+        enhancedQuery = `${query} pet store pet valu blue barn animal supplies pet shop`;
+      }
+
+      if (enhancedQuery !== query) {
+        console.log(`  🔍 Enhanced query: "${query}" → "${enhancedQuery}"`);
+      }
+
+      // IMPROVED: Use hybrid search (vector + keyword) with alpha=0.7 (70% vector, 30% keyword)
+      const results = await businessCollection.query.hybrid(enhancedQuery, {
+        limit: limit * 3, // Get more for better ranking
+        returnMetadata: ['score'],
+        alpha: 0.7 // 70% semantic, 30% keyword matching
       });
 
       const businesses = results.objects.map((obj: any) => {
+        // Base score from hybrid search
+        let score = obj.metadata?.score || 0.5;
+        
+        // BOOST: Businesses with complete information
+        const props = obj.properties;
+        if (props.address && props.address !== 'Address not available' && props.address.toLowerCase().includes('terrace')) {
+          score *= 1.3; // Boost Terrace businesses with addresses
+        }
+        if (props.phone && props.phone !== 'Phone not available') {
+          score *= 1.1; // Boost businesses with phone numbers
+        }
+        if (props.description && props.description !== 'No description available') {
+          score *= 1.1; // Boost businesses with descriptions
+        }
+        if (props.verified) {
+          score *= 1.2; // Boost verified businesses
+        }
+
+        // BOOST: Name match
+        const businessName = (props.businessName || '').toLowerCase();
+        const queryWords = query.toLowerCase().split(/\s+/);
+        const nameMatchCount = queryWords.filter(word => 
+          word.length > 3 && businessName.includes(word)
+        ).length;
+        if (nameMatchCount > 0) {
+          score *= (1 + (nameMatchCount * 0.15)); // Boost name matches
+        }
+
         // If address is outside Terrace, BC, show generic "Operating in Terrace, BC"
-        let displayAddress = obj.properties.address || 'Address not available';
+        let displayAddress = props.address || 'Address not available';
         if (displayAddress && displayAddress !== 'Address not available') {
           const hasTerraceBC = displayAddress.toLowerCase().includes('terrace') && displayAddress.toLowerCase().includes('bc');
           const hasThornhill = displayAddress.toLowerCase().includes('thornhill') && displayAddress.toLowerCase().includes('bc');
           
           if (!hasTerraceBC && !hasThornhill) {
             displayAddress = 'Operating in Terrace, BC (claim business to add address)';
+            score *= 0.7; // Penalize businesses without Terrace addresses
           }
         }
 
         return {
-          name: this.cleanBusinessName(obj.properties.businessName || 'Unknown'),
-          category: `${obj.properties.category} → ${obj.properties.subcategory}`,
+          name: this.cleanBusinessName(props.businessName || 'Unknown'),
+          category: `${props.category} → ${props.subcategory}`,
           address: displayAddress,
-          phone: obj.properties.phone || 'Phone not available',
-          description: obj.properties.description || 'No description available',
-          score: 1 - (obj.metadata?.distance || 0),
-          claimed: obj.properties.claimed || false,
-          verified: obj.properties.verified || false,
+          phone: props.phone || 'Phone not available',
+          description: props.description || 'No description available',
+          score: score,
+          claimed: props.claimed || false,
+          verified: props.verified || false,
         };
       });
+
+      // Sort by adjusted score (highest first)
+      businesses.sort((a, b) => b.score - a.score);
 
       // Deduplicate by business name and address
       const seen = new Set<string>();
@@ -175,6 +234,11 @@ export class RAGSystem {
         seen.add(key);
         return true;
       });
+
+      console.log(`  📊 Search results: ${results.objects.length} raw → ${unique.length} unique → returning top ${limit}`);
+      if (unique.length > 0) {
+        console.log(`  🥇 Top result: ${unique[0].name} (score: ${unique[0].score.toFixed(3)})`);
+      }
 
       return unique.slice(0, limit);
     } catch (error) {
@@ -188,16 +252,38 @@ export class RAGSystem {
       const client = await this.getWeaviateClient();
       const documentCollection = client.collections.get('Document');
 
-      // FIX #1: Enhance query for specific topics to improve retrieval
+      // ENHANCED: Expand query for specific topics
       let enhancedQuery = query;
       if (/dog.*licen|cat.*licen|pet.*licen/i.test(query)) {
         enhancedQuery = `${query} animal control bylaw 2159 licensing fees`;
         console.log(`  🐕 Enhanced animal license query: ${enhancedQuery}`);
       }
+      else if (/business.*licen|start.*business|open.*restaurant|open.*shop/i.test(query)) {
+        enhancedQuery = `${query} business licence bylaw 2112 licensing requirements fees`;
+        console.log(`  🏢 Enhanced business license query: ${enhancedQuery}`);
+      }
+      else if (/sign|signage|billboard/i.test(query)) {
+        enhancedQuery = `${query} sign bylaw 2102 regulation permit`;
+        console.log(`  🪧 Enhanced sign query: ${enhancedQuery}`);
+      }
+      else if (/noise|loud|quiet/i.test(query)) {
+        enhancedQuery = `${query} noise control bylaw 2100 quiet hours`;
+        console.log(`  🔇 Enhanced noise query: ${enhancedQuery}`);
+      }
+      else if (/building|construction|deck|addition|renovation/i.test(query) && /permit/i.test(query)) {
+        enhancedQuery = `${query} building bylaw 2307 permit requirements fees`;
+        console.log(`  🏗️ Enhanced building query: ${enhancedQuery}`);
+      }
+      else if (/zoning|setback|lot|property.*use/i.test(query)) {
+        enhancedQuery = `${query} zoning bylaw 2069 regulations`;
+        console.log(`  📐 Enhanced zoning query: ${enhancedQuery}`);
+      }
 
-      const results = await documentCollection.query.nearText(enhancedQuery, {
+      // IMPROVED: Use hybrid search for better bylaw discovery
+      const results = await documentCollection.query.hybrid(enhancedQuery, {
         limit: limit * 3, // Get more to account for duplicates and scoring
-        returnMetadata: ['distance'],
+        returnMetadata: ['score'],
+        alpha: 0.75 // 75% semantic, 25% keyword (bylaws have specific terminology)
       });
 
       // FIX #1: Detect if this is a fee/cost query

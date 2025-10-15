@@ -1,0 +1,430 @@
+🧪 COMPREHENSIVE PERSONA-BASED CONVERSATION TESTS
+
+Testing context retention, topic switching, and comprehensive answers
+
+
+================================================================================
+👤 PERSONA: New Dog Owner
+================================================================================
+
+
+📝 Turn 1: "I want to get a dog"
+   Expected topics: pet stores, animal shelter, licensing requirements
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+If you're looking to get a dog in Terrace, you can visit **Pet Valu Canada** located at 4717 Lakelse Ave, Terrace, BC V8G 1R5. I don't have their phone number available. Another option is **Blue Barn Pet & Hobby Farm**, though I don't have their address or phone number.
+
+Remember, if you decide to get a dog, you'll need to obtain a dog license from the City of Terrace. If you need more information on dog licensing, feel free to ask!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 2: "where can I buy one?"
+   Expected topics: pet stores - Pet Valu, Blue Barn, etc.
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+If you're looking to buy a dog in Terrace, you can visit **Pet Valu Canada** located at 4717 Lakelse Ave, Terrace, BC V8G 1R5. I don't have their phone number available. Another option is **Blue Barn Pet & Hobby Farm**, but I don't have their address or phone number. Remember, if you decide to get a dog, you'll need to look into dog licensing requirements with the City of Terrace.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 3: "do I need a license?"
+   Expected topics: dog license (NOT business license)
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Yes, if you own, possess, or harbor a dog over 6 months old within the City of Terrace, you must have a valid and subsisting dog licence. 
+
+📄 **Full details**: [Animal Control Consolidated Bylaw](https://www.terrace.ca/media/3998)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 4: "how much?"
+   Expected topics: dog license fees: $20 spayed, $50 non-spayed
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The cost of a dog licence in the City of Terrace varies based on several factors. Here are the fees as per Schedule A of the Animal Control Consolidated Bylaw:
+
+- **Regular Dog Licence**: $30 per year
+- **Spayed/Neutered Dog Licence**: $20 per year
+- **Senior Citizen (65+) Dog Licence**: $15 per year for the first dog, $10 per year for each additional dog
+- **Replacement Licence Tag**: $5
+
+If you need more specific information or if your situation falls into a different category, please let me know.
+
+📄 **Full details**: [Animal Control Consolidated Bylaw](https://www.terrace.ca/media/3998)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 5: "what if my dog is aggressive?"
+   Expected topics: aggressive dog regulations, $100 license
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+If your dog is considered aggressive in the City of Terrace, here are the specific regulations you must follow:
+
+- **Declaration**: The Animal Control Officer (ACO) may declare and record your dog as an aggressive dog at their discretion.
+- **Licensing**: You must obtain an aggressive dog license.
+- **Confinement on Property**: Your dog must be confined to your residence or only within the rear or side yard in a secure enclosure.
+- **Off Property**: When off your property, your dog must be on a secure leash held by a responsible person with sufficient ability to control the dog, or kept in a locked vehicle or enclosure.
+- **Sale or Transfer**: You must inform the ACO within 7 days if your dog is sold or given away.
+- **Incident Reporting**: You must inform the ACO immediately if your aggressive dog is at large or has bitten or attacked a person or another animal.
+- **Removal from Record**: After a minimum of 18 months, you may apply for removal from the aggressive dog record if you can demonstrate measures like behavior training and that your dog no longer represents a risk.
+- **Rabies Quarantine**: If your aggressive dog bites a person and is not immunized against rabies, it must be quarantined for 10 days under ACO observation at your cost.
+
+📄 **Full details**: [Animal Control Consolidated Bylaw](https://www.terrace.ca/media/3998)
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+👤 PERSONA: New Resident
+================================================================================
+
+
+📝 Turn 1: "I just moved to Terrace, where should I shop for groceries?"
+   Expected topics: grocery stores, Save-On-Foods, Walmart, Safeway
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Welcome to Terrace! For groceries, you can shop at:
+
+1. **Walmart Supercentre #5834** located at 4427 Yellowhead Hwy, Terrace, BC V8G 5L5. I don't have their phone number available.
+
+2. **Canada Safeway #126** at 4655 Lakelse Ave, Terrace, BC V8G 1R3. Their phone number is also not available.
+
+Enjoy your shopping!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 2: "which one is cheapest?"
+   Expected topics: Walmart pricing comparison
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+For groceries, Walmart Supercentre #5834 is generally known for offering lower prices compared to other grocery stores. However, prices can vary based on specific items and promotions, so it's always a good idea to compare prices for the items you need.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 3: "I also need a mechanic for my car"
+   Expected topics: auto repair shops, Kalum Tire, Precision Auto
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+For your car, you can consider the following mechanics in Terrace:
+
+1. **Norm's Auto Refinishing** - I don't have the address or phone number available.
+2. **Trosky Auto Care** - I don't have the address or phone number available.
+
+Unfortunately, I don't have more detailed information on these businesses at the moment.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 4: "do they do winter tires?"
+   Expected topics: tire installations, fall season booking
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+For Norm's Auto Refinishing, I don't have information available on whether they install winter tires. You might want to contact them directly for that information. I don't have their phone number or address available.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+👤 PERSONA: Business Owner
+================================================================================
+
+
+📝 Turn 1: "I want to open a restaurant in Terrace"
+   Expected topics: business license, zoning, permits
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To open a restaurant in Terrace, you'll need to consider several steps and regulations. Here's what you should know:
+
+1. **Business License**: You'll need to obtain a business license from the City of Terrace. The application process and fees would be detailed in the city's business licensing bylaws, but specific details aren't available in the current context.
+
+2. **Health and Safety Regulations**: Compliance with health regulations is crucial. This includes inspections by Northern Health, which oversees food safety in the region.
+
+3. **Zoning and Location**: Ensure your chosen location complies with the city's zoning bylaws for commercial food establishments. You might need to consult the city's zoning maps or bylaws for this information.
+
+4. **Building and Renovation Permits**: If you're planning to build or renovate, you'll need to apply for the appropriate permits from the city's building department.
+
+Unfortunately, I don't have specific details on fees, forms, or contact information for these processes in Terrace. For the most accurate and up-to-date information, you should contact the City of Terrace directly or visit their official website.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 2: "what licenses do I need?"
+   Expected topics: business license bylaw, fees
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To open a restaurant in Terrace, you'll need the following licenses:
+
+1. **Business License**: You must obtain a business license from the City of Terrace. The application process involves submitting an application form along with the required fee. The fee for a business license is $150 annually.
+
+2. **Food Service Permit**: A food service permit is required from Northern Health, which oversees food safety regulations. You'll need to ensure your establishment meets health and safety standards before this permit is issued.
+
+3. **Liquor License**: If you plan to serve alcohol, you'll need to apply for a liquor license through the Liquor and Cannabis Regulation Branch of the BC government.
+
+Please note, these are the primary licenses needed, but additional permits or inspections might be required depending on your specific business operations.
+
+If you need more detailed information on any of these licenses, feel free to ask!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 3: "how much does a business license cost?"
+   Expected topics: business license fees from bylaw
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The cost for a business license in Terrace is set out in Schedule A of the Business Licence Consolidated Bylaw. However, the specific fees are not detailed in the provided document text. 
+
+For full details on the business license fees, you can refer to the bylaw document:
+
+📄 **Full details**: [Business Licence Consolidated Bylaw](https://www.terrace.ca/media/3962)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 4: "what about signage regulations?"
+   Expected topics: sign bylaw, permit requirements
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Signage regulations in Terrace are governed by the Sign Bylaw No. 2102-2016. Here are the key points:
+
+- **General Regulations**: The bylaw applies to all signs within the city, with specific rules for different zones and types of signs. It includes regulations on the erection, placement, alteration, maintenance, demolition, and removal of signs.
+
+- **Permit Requirements**: A sign permit is required for most signs, except for certain types like banners, building identification signs, construction signs, garage sale signs, portable signs, and real estate signs. However, even these exempt signs have regulations regarding their number, size, location, and duration.
+
+- **Application Process**: To apply for a sign permit, you can visit the Planning section of the City of Terrace website for an electronic fillable form, or contact the City of Terrace Public Works at 5003 Graham Ave or call 250-615-4022. If hiring a sign company, the property owner must sign the permit or provide a letter of authorization.
+
+- **Signage Limits**: The amount and type of signage allowed depend on the property's zoning. Each property has a maximum total sign area, and each sign type has a maximum permitted size. For multi-tenant properties, the owner can allocate signage within the total allowed for the property.
+
+- **Home-Based Businesses**: Signs for home-based businesses (Home Occupations) require a permit. Level 1 Home Occupations are not allowed signs, while Level 2 and 3 are limited to one sign on a wall, window, or fence, with size limits of 0.4 m² for Level 2 and 1.2 m² for Level 3.
+
+- **Community Event Signs**: These are temporary and can be placed on private property or in the public right of way with a permit and a deposit. A Community Event Signboard is available on Keith Avenue across from the Visitors Info Centre.
+
+- **Third-Party Advertising**: Businesses are not allowed to advertise on properties other than where the business is located.
+
+- **Zoning Information**: To find out your property's zoning, you can use TerraMap at https://www.terrace.ca/terramap or call Development Services at 250-615-4022.
+
+For more detailed information, you can refer to the Sign Bylaw No. 2102-2016 directly.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+👤 PERSONA: Homeowner
+================================================================================
+
+
+📝 Turn 1: "I need to build a deck on my house"
+   Expected topics: building permit, building bylaw
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To build a deck on your house in Terrace, you will need to obtain a building permit. Here's what you need to know:
+
+- **Permit Requirement**: A building permit is required for constructing a deck as it falls under the category of erecting a new structure.
+
+- **Application Process**: You can apply for a building permit through the City of Terrace's online application portal. The application must include all necessary plans and specifications to show compliance with the Building Bylaw and the 2024 British Columbia Building Code.
+
+- **Fees**: 
+  - Application fee: $50.00 (non-refundable) for projects over $5,000 in value.
+  - Permit fee: $8.00 per $1,000 of the construction value.
+  - Plan review fee: $1.00 per $1,000 of the construction value.
+  - Administrative fee: $350.00 (refundable) if the construction value exceeds $10,000. This fee is refunded upon an approved occupancy inspection within 2 years of the permit issue date.
+
+- **Inspections**: You'll need to schedule inspections at various stages of construction, including foundation, framing, insulation, and final inspection, through the online portal.
+
+- **Contact Information**: For further assistance, you can contact the Development Services Department at:
+  - Address: 5003 Graham Avenue, Terrace, B.C. V8G 1B3
+  - Phone: (250) 615-4000
+  - Email: lfrancisco@terrace.ca, nbrooks@terrace.ca, or building.licensing@terrace.ca
+
+- **Additional Requirements**: Depending on the complexity of your deck, you might need an architect's or engineer's seal. Please call the Building Inspection Department at 250-615-4000 for detailed requirements.
+
+📄 **Full details**: [Building Bylaw](https://www.terrace.ca/media/3959)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 2: "what permits do I need?"
+   Expected topics: building permit requirements
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To build a deck on your house in Terrace, you will need a building permit. Here's what you need to know:
+
+- **Building Permit**: A building permit is required before you start constructing, altering, or adding to any structure, including a deck. This permit ensures that your construction complies with the Building Code and other relevant regulations.
+
+- **Application Process**: You must submit your application through the City's online workflow management system. The application fee is $75 if you apply before starting construction, or $150 if construction has already begun. The permit fee is $8 per $1,000 of the work value, which is refundable under certain conditions.
+
+- **Additional Considerations**: If your deck involves plumbing, there's an additional fee of $10 per fixture. Also, be aware that you might need to provide an administrative deposit as per Table A-4 in Schedule A of the Building Bylaw, which is refundable upon satisfactory completion and final inspection.
+
+- **Inspections**: You'll need to schedule inspections at various stages of construction, including foundation, framing, insulation, and final inspection, through the online portal.
+
+- **Contact Information**: For more details or to apply, you can visit the City of Terrace website or contact the Development Services Department at 5003 Graham Avenue, Terrace, BC V8G 1B3, or call (250) 615-4000.
+
+📄 **Full details**: [Building Bylaw](https://www.terrace.ca/media/3959)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 3: "how do I apply?"
+   Expected topics: permit application process
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To apply for a building permit for your deck in Terrace, you must use the City's online application portal. Here's how you can proceed:
+
+- **Online Application**: Submit your application through the online workflow management system. This system handles receiving applications, processing permits, communication between parties, scheduling inspections, and issuing permits.
+- **Application Fee**: You'll need to pay a non-refundable application fee of $75, or $150 if construction has already started. If you choose to submit a paper application, there's an additional $150 surcharge.
+- **Permit Fees**: The permit fee is $8 per $1,000 of the work value, which is refundable under certain conditions.
+- **Additional Requirements**: Ensure your application includes all necessary plans, specifications, and any professional certifications required. The building official may request additional information.
+
+For full details on the application process and all related fees, please refer to the Building Bylaw:
+
+📄 **Full details**: [Building Bylaw](https://www.terrace.ca/media/3959)
+
+If you need further assistance or have more questions, feel free to ask!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 4: "my neighbor is making too much noise at night"
+   Expected topics: noise bylaw, quiet hours, complaints
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Your neighbor making excessive noise at night could be in violation of the City of Terrace Noise Control Bylaw. According to the bylaw, it is prohibited for any person to create or cause noise that disturbs the peace or quiet, which includes noise at night. 
+
+If the noise continues to be a problem, you can report it to a Bylaw Compliance Officer. The bylaw allows for fines ranging from $100 to $2,000 for the first offence, and $300 to $2,000 for any subsequent offences, plus costs of prosecution. Each day the noise continues is considered a separate offence.
+
+📄 **Full details**: [City of Terrace Noise Control Bylaw No. 2100–2016](https://www.terrace.ca/media/3926)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 5: "what are the rules?"
+   Expected topics: noise control bylaw details
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The rules regarding noise in the City of Terrace are outlined in the Noise Control Bylaw No. 2100-2016. Here are the key points:
+
+- **Prohibited Noises**: No person shall create, make, or cause noise, or allow an animal to do so, in or on any highway or elsewhere in the city.
+- **Exemptions**: Certain activities are exempt, including:
+  - Day-to-day operations in non-residential zones.
+  - Emergency vehicles.
+  - Utility repairs.
+  - Public worship bells or chimes.
+  - Fireworks under specific conditions.
+  - Construction, repair, or maintenance between 7 AM and 8 PM, Monday to Saturday.
+  - Use of power equipment in residential zones between 7 AM and 8 PM, Monday to Saturday, and 9 AM to 8 PM on Sundays or general holidays.
+  - Snow removal at specified times.
+- **Enforcement**: Bylaw Compliance Officers are authorized to enter properties to enforce the bylaw.
+- **Penalties**: Fines range from $100 to $2,000 for the first offence, and $300 to $2,000 for subsequent offences.
+
+📄 **Full details**: [City of Terrace Noise Control Bylaw No. 2100–2016](https://www.terrace.ca/media/3926)
+
+Need details on a specific situation? Just ask!
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+👤 PERSONA: Tourist
+================================================================================
+
+
+📝 Turn 1: "I'm visiting Terrace for the weekend, where should I eat?"
+   Expected topics: restaurants, Don Diegos, Cafenara
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+For your visit to Terrace, you might enjoy eating at Mr Mikes Steakhouse Casual, located at 4736 Lakelse Ave Ste 5. If you're looking for something quicker, A & W Restaurant & Drive Thru is another option, situated at 4616 Keith Ave. Unfortunately, I don't have phone numbers available for either location. Enjoy your meal!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 2: "what about hotels?"
+   Expected topics: hotels, motels, accommodations
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Could you please clarify your question? For example: "What time does the pool open?" or "How much is the Mr Mikes Steakhouse Casual?" I want to make sure I give you the right information.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 3: "I want to see the Kermode bear, where should I go?"
+   Expected topics: wildlife, attractions, tours
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To see the Kermode bear, you can visit the Kermode Bear Interpretive Centre located at 1580 Highway 16 West, Terrace, BC. It's a great place to learn about and see the Kermode bear, also known as the spirit bear.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+👤 PERSONA: Contractor
+================================================================================
+
+
+📝 Turn 1: "where can I rent heavy equipment in Terrace?"
+   Expected topics: equipment rental, construction equipment
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+You can rent heavy equipment at the following locations in Terrace:
+
+1. **West Point Rentals**
+   Address: 2903 Kalum St, Terrace, BC V8G 2M4
+   Phone: I don't have that information available
+
+2. **Trigo's Enterprises - Rentals**
+   Address: 4542 Lakelse Ave, Terrace, BC V8G 1P8
+   Phone: I don't have that information available
+
+3. **Cross Country Canada Supplies & Rentals**
+   Address: 3010 Eby St, Terrace, BC V8G 2X8
+   Phone: I don't have that information available
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 2: "I also need a permit for excavation work"
+   Expected topics: excavation permit, development permit
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+For excavation work in Terrace, you will need to apply for a Development Permit. Here are the steps and requirements based on the Development Permit Procedures Bylaw:
+
+1. **Application Requirement**: You must submit an application for a Development Permit if your excavation work is within the areas designated by the Official Community Plan as Development Permit Areas.
+
+2. **Application Process**: 
+   - Complete the Development Permit Application form.
+   - Include an application fee as specified in the Planning Fees Bylaw No. 2058-2014.
+   - Provide a Letter of Authorization from the property owner if you are not the owner.
+   - Submit reasons for your application.
+   - Include a drawing showing the location of the property.
+   - Provide a detailed Site Plan which should include:
+     - Dimensioned site plan showing locations of proposed and existing buildings, ground levels, off-street parking, landscaping, access corridors, pedestrian routes, drainage, and exterior lighting.
+     - Floor plan of proposed and existing buildings showing proposed use of the spaces.
+     - Elevation of proposed and existing buildings and structures and details of exterior finish and signs.
+     - Location of any major or limiting topographic features.
+
+3. **Submission**: Electronic submissions in PDF format are preferred. You can email the completed application to developmentservices@terrace.ca.
+
+4. **Contact Information**: For additional information or assistance, you can contact the City of Terrace Development Services Department at:
+   - Address: 5003 Graham Avenue, Terrace, BC V8G-1B3
+   - Email: developmentservices@terrace.ca
+   - Phone: (250) 615-4022
+
+5. **Additional Notes**: 
+   - Additional information may be required at the time of application.
+   - The application process is subject to the conditions and requirements set out in the Development Permit Procedures Bylaw.
+
+📄 **Full details**: [Development Permit Procedures Bylaw](https://www.terrace.ca/media/3915)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Turn 3: "what are the setback requirements?"
+   Expected topics: zoning bylaw, setbacks
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The setback requirements for excavation work in Terrace are as follows:
+
+- **Front parcel line**: 6.0 meters
+- **Exterior side parcel line**: 4.0 meters
+- **Interior side parcel line**: 4.0 meters
+- **Rear parcel line**: 6.0 meters
+
+These setbacks are specifically for manufactured home park parcels as per the Manufactured Home Park Bylaw. 
+
+📄 **Full details**: [Manufactured Home Park Bylaw No. 2099-2016](https://www.terrace.ca/media/3924)
+────────────────────────────────────────────────────────────────────────────────
+
+
+================================================================================
+✅ ALL PERSONA TESTS COMPLETE!
+================================================================================
+
+📊 Test Coverage:
+  ✅ Context retention across multiple turns
+  ✅ Topic switching (dogs → groceries → cars)
+  ✅ Follow-up question resolution (pronouns, "how much?")
+  ✅ Business searches vs. bylaw searches
+  ✅ Different user types (resident, tourist, business owner, etc.)
+
+Review responses above for quality and context accuracy!
