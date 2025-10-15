@@ -156,9 +156,9 @@ async function replaceOldBylaws() {
       const metaContent = readFileSync(metaPath, 'utf-8');
       const meta = JSON.parse(metaContent);
 
-      // Build full content from sections
+      // Build full content from sections AND schedules
       const sectionFiles = readdirSync(folderPath).filter(f => 
-        f.startsWith('section_') && f.endsWith('.json')
+        (f.startsWith('section_') || f.startsWith('schedule_')) && f.endsWith('.json')
       );
 
       let fullContent = '';
@@ -166,18 +166,29 @@ async function replaceOldBylaws() {
         fullContent += `${meta.description}\n\n`;
       }
 
-      // Load section files
+      // Load section and schedule files
       for (const sectionFile of sectionFiles.sort()) {
         try {
           const sectionPath = resolve(folderPath, sectionFile);
           const sectionData = JSON.parse(readFileSync(sectionPath, 'utf-8'));
           
-          fullContent += `Section ${sectionData.section_number || ''}: ${sectionData.title || ''}\n`;
-          
-          if (typeof sectionData.content === 'object') {
-            fullContent += JSON.stringify(sectionData.content, null, 2) + '\n\n';
-          } else if (typeof sectionData.content === 'string') {
-            fullContent += sectionData.content + '\n\n';
+          // Handle schedule files differently
+          if (sectionFile.startsWith('schedule_')) {
+            fullContent += `Schedule ${sectionData.schedule || ''}: ${sectionData.title || ''}\n`;
+            if (sectionData.description) {
+              fullContent += `${sectionData.description}\n\n`;
+            }
+            // Include entire schedule data as JSON for searchability
+            fullContent += JSON.stringify(sectionData, null, 2) + '\n\n';
+          } else {
+            // Regular section file
+            fullContent += `Section ${sectionData.section_number || ''}: ${sectionData.title || ''}\n`;
+            
+            if (typeof sectionData.content === 'object') {
+              fullContent += JSON.stringify(sectionData.content, null, 2) + '\n\n';
+            } else if (typeof sectionData.content === 'string') {
+              fullContent += sectionData.content + '\n\n';
+            }
           }
         } catch (e) {}
       }
