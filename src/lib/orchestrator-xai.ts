@@ -99,16 +99,32 @@ export class OrchestratorXAI {
   private buildConversationContext(history: ConversationTurn[]): string {
     if (!history || history.length === 0) return 'none';
 
+    // Helper: Sanitize Unicode characters for ByteString compatibility
+    const sanitizeText = (text: string): string => {
+      // Replace non-ASCII characters with ASCII equivalents or remove them
+      return text
+        .normalize('NFD') // Decompose Unicode characters
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritical marks
+        .replace(/[^\x00-\x7F]/g, '') // Remove any remaining non-ASCII characters
+        .trim();
+    };
+
     const recent = history.slice(-3);
     return recent
       .map((turn, idx) => {
         const offset = idx - recent.length;
         // Include both query AND response summary for context
-        const responseSummary = turn.response.length > 150 
-          ? turn.response.substring(0, 150).trim() + '...' 
-          : turn.response;
-        const docs = turn.retrievedDocs.length > 0 ? ` | retrieved_docs=[${turn.retrievedDocs.slice(0, 2).join(', ')}]` : '';
-        return `TURN_${offset}:\n  User: "${turn.query}"\n  AI: "${responseSummary}"${docs}`;
+        // Sanitize to prevent Unicode ByteString errors
+        const responseSummary = sanitizeText(
+          turn.response.length > 150 
+            ? turn.response.substring(0, 150).trim() + '...' 
+            : turn.response
+        );
+        const query = sanitizeText(turn.query);
+        const docs = turn.retrievedDocs.length > 0 
+          ? ` | retrieved_docs=[${turn.retrievedDocs.slice(0, 2).map(d => sanitizeText(d)).join(', ')}]` 
+          : '';
+        return `TURN_${offset}:\n  User: "${query}"\n  AI: "${responseSummary}"${docs}`;
       })
       .join('\n\n');
   }
