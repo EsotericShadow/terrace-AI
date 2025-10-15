@@ -87,8 +87,14 @@ export class RAGSystem {
 
   private async getWeaviateClient(): Promise<WeaviateClient> {
     if (!this.weaviateClient) {
+      // Ensure URL has https:// prefix (fix for Vercel deployment)
+      let weaviateUrl = this.weaviateUrl;
+      if (!weaviateUrl.startsWith('http://') && !weaviateUrl.startsWith('https://')) {
+        weaviateUrl = `https://${weaviateUrl}`;
+      }
+      
       this.weaviateClient = await weaviate.connectToWeaviateCloud(
-        this.weaviateUrl,
+        weaviateUrl,
         {
           authCredentials: new weaviate.ApiKey(this.weaviateApiKey),
           headers: {
