@@ -1,0 +1,372 @@
+🎨 CULTURAL & HISTORICAL KNOWLEDGE TESTS
+
+Testing: Indigenous knowledge, city history, geography, community info
+
+
+================================================================================
+🎭 SCENARIO: Indigenous Culture & Land Acknowledgement
+================================================================================
+
+
+📝 Question 1: "Tell me about the Indigenous peoples of Terrace"
+   Should include: Kitselas, Kitsumkalum, Tsimshian, unceded territories
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace is situated within the unceded territories of the Ts'msyen (Tsimshian) peoples. The primary local Nations are Kitselas and Kitsumkalum, both part of the Tsimshian Nation. These Nations have a deep historical presence, with Kitselas Canyon being a significant cultural and historical site, recognized as a National Historic Site. Both Nations maintain traditional governance systems, including house and clan structures, and are actively involved in cultural revitalization and stewardship. For more specific information, you can visit the websites of Kitselas First Nation at [kitselas.com](https://kitselas.com/about) and Kitsumkalum First Nation at [kitsumkalum.com](https://kitsumkalum.com).
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "What is the land acknowledgement for Terrace?"
+   Should include: Kitselas, Kitsumkalum, Tsimshian, traditional territories
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The land acknowledgement for Terrace is: "We acknowledge we are on the unceded traditional territory of the Kitselas and Kitsumkalum First Nations of the Ts'msyen (Tsimshian) peoples."
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "Are there any Indigenous cultural sites I can visit?"
+   Should include: Kitselas Canyon, National Historic Site, petroglyphs, totem poles
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Yes, you can visit the Kitselas Canyon, which is a culturally and historically significant site for the Indigenous peoples of Terrace. It's part of the unceded territories of the Tsimshian (Ts'msyen) peoples, specifically the Kitselas and Kitsumkalum First Nations.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 4: "Tell me more about that site"
+   Should include: guided tours, longhouses, governance, trade, spiritual practices
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The Kitselas Canyon National Historic Site, located about 20 km northeast of Terrace along the Skeena River, is a significant cultural landscape. It contains ancestral village sites, totem poles, house remains, and petroglyphs, having been occupied for approximately 5,000 years. This site is of high national significance and plays a crucial role in local cultural tourism and Indigenous-led interpretation. 
+
+Tours and access to the site are managed in partnership with the Kitselas community and the Gitselasu Stewardship Society. It's important to follow their guidance on photography, artifact handling, and ceremony protocols. For more information or to book a visit, you can reach out to the Kitselas Stewardship Society or visit their website at [kitselas.com](https://kitselas.com). 
+
+📄 **Full details**: [Kitselas Canyon National Historic Site](https://www.pc.gc.ca/en/lhn-nhs/bc/kitselas)
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: City History & Geography
+================================================================================
+
+
+📝 Question 1: "What is the history of Terrace?"
+   Should include: Skeena River, forestry, Cedar Pole Capital, 1940s-1950s
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace is situated on the traditional land of the Tsimshian Nation, including the Kitselas and Kitsumkalum First Nations, who have used these lands for millennia. European settlement began with steam-powered riverboats in the mid-1860s, with the Mumford arriving in 1866 to support telegraph line construction. The area saw increased activity due to fishing and gold rushes. In 1905, George Little, often called the "founder of Terrace," arrived and later donated land for the Grand Trunk Pacific Railway station. The town was initially proposed to be named "Littleton" but was renamed "Terrace" reflecting the local landforms and the Tsimshian name for the area. The railway arrived in 1914, linking Terrace to Fort George and Edmonton. The Old Skeena Bridge was built in 1925, and the highway system developed in the 1940s and 50s, impacting downtown Terrace with the growth of automobile use. A highway bypass completed later stimulated growth south of the rail. Need details on a specific aspect of Terrace's history? Just ask!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "Why is it called Terrace?"
+   Should include: natural terraces, glacial deposits, Skeena River Valley
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The name "Terrace" originates from the geographical feature of the area, which is characterized by a series of flat terraces along the Skeena River. These terraces are a result of the river's historical activity and are a prominent feature of the landscape in Terrace, BC.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "What is the population of Terrace?"
+   Should include: 12,299, 18,000 greater area
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The population of Terrace is approximately 12,299 for the city itself, and about 18,000 for the greater area.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 4: "How far is it from Prince Rupert?"
+   Should include: 150 km, west, Highway 16
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The distance between Terrace and Prince Rupert is approximately 142 kilometers by road.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 5: "What is the climate like?"
+   Should include: temperate coastal, warm summers, mild winters, 2-4 meters snow
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace enjoys a temperate coastal climate with warm summers and mild winters compared to interior BC. It receives less than half the rainfall of coastal BC, thanks to the sheltering effect of the Coast Mountains. The climate is warm enough to support fruit orchards and specialty crops like peaches.
+
+Need details on a specific situation? Just ask!
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: Kermode Bear Knowledge
+================================================================================
+
+
+📝 Question 1: "What is a Kermode bear?"
+   Should include: Spirit Bear, white/cream, subspecies, black bear, rare
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The Kermode bear, also known as the Spirit bear, is a rare cream/white subspecies of the black bear, scientifically named Ursus americanus Kermodei. It's a significant symbol for Terrace, featured on the city's seal. These bears inhabit the mountainous terrain, lush forests, and productive salmon streams around Terrace and the Douglas Channel islands.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "Can I see one in Terrace?"
+   Should include: habitat, mountains, forests, rare, protected
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The Kermode bear, also known as the Spirit bear, can be seen in the Terrace area, specifically in the Khutzeymateen Grizzly Bear Sanctuary, which is located about 45 km northeast of Prince Rupert. This sanctuary is one of the best places in the world to see Kermode bears in their natural habitat. To visit, you would need to arrange a guided tour, as the sanctuary is not accessible by the general public without a guide.
+
+For more information on how to arrange a visit, you might want to contact local tour operators or the BC Parks service.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "Why is it important to Terrace?"
+   Should include: city seal, symbol, cultural significance, protected
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The Kermode bear, known as the Spirit bear, is important to Terrace for several reasons:
+
+1. **Cultural Significance**: The Kermode bear holds a special place in the culture of the local Indigenous communities, particularly the Tsimshian (Ts'msyen) peoples, including the Kitselas and Kitsumkalum Nations. The bear is seen as a symbol of their heritage and stewardship of the land.
+
+2. **Tourism and Conservation**: The presence of the Kermode bear in the nearby Khutzeymateen Grizzly Bear Sanctuary attracts visitors interested in wildlife and conservation, boosting local tourism. This sanctuary, located near Terrace, is dedicated to the protection of these bears, highlighting the area's commitment to environmental conservation.
+
+3. **Educational Value**: The Kermode bear serves as an educational resource, teaching visitors and residents about biodiversity, the importance of preserving natural habitats, and the unique wildlife of the region.
+
+These aspects underline the bear's importance to the cultural, economic, and environmental fabric of Terrace.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: Community Events & Culture
+================================================================================
+
+
+📝 Question 1: "What events happen in Terrace?"
+   Should include: Riverboat Days, BC Day weekend, August, farmers market
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+In Terrace, events are organized by community groups including non-profit organizations, community partner associations, visual and performing artists, and artisans. These events contribute positively to recreational, cultural, and social opportunities, as well as to the preservation and development of arts, culture, and heritage, community wellness, public safety, tolerance, intercultural harmony, community livability, and the overall quality of life. All events posted on the City of Terrace's Calendar of Events are subject to approval by the designated Website Administrator, and the City reserves the right to refuse any submission at their discretion.
+
+For more detailed information on how to post an event, you can refer to the Calendar of Events Posting Criteria. If you have any questions or concerns regarding personal information collected on the website, you can contact the City’s Freedom of Information Officer at 250-638-4721.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "When is Riverboat Days?"
+   Should include: BC Day long weekend, first weekend of August
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+I don't have specific information about when Riverboat Days occurs in Terrace. If you're looking for events in general, you might want to check the City of Terrace's Calendar of Events, which is used by community groups to post their events. For more details on how events are posted, you can refer to the Calendar of Events Posting Criteria.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "Is there a farmers market?"
+   Should include: largest in Northern BC, summer
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Yes, there is a farmers market in Terrace. The Skeena Valley Farmers' Market operates from May to October on Saturday mornings in George Little Park on Market Street. It's a popular community event where you can purchase local produce and products.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: Geography & Transportation
+================================================================================
+
+
+📝 Question 1: "Where is Terrace located?"
+   Should include: northwestern BC, Highway 16, Highway 37, Skeena River
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace is centrally located in Northwest British Columbia, serving as the regional nexus for highway, rail, and air transportation routes.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "How do I get there from Vancouver?"
+   Should include: 550 air miles, fly, airport, drive, Highway 16
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+To get to Terrace from Vancouver, you have a few options:
+
+1. **By Air**: You can fly from Vancouver International Airport (YVR) to Terrace Regional Airport (YXT). There are direct flights available with airlines like Air Canada and WestJet. The flight duration is approximately 1.5 hours.
+
+2. **By Road**: You can drive from Vancouver to Terrace via Highway 1 and then Highway 16. The distance is about 1,000 km, and the drive typically takes around 12 to 14 hours, depending on road conditions and stops.
+
+3. **By Bus**: Greyhound Canada used to offer bus services from Vancouver to Terrace, but they have discontinued their operations. However, you might find other private bus services or shuttles that operate this route, though I don't have specific details on those.
+
+4. **By Rail**: VIA Rail offers a train service from Vancouver to Prince Rupert, with a stop in Terrace. The journey takes about 24 hours, and you would need to book in advance.
+
+If you need more specific details on any of these options, like schedules or fares, let me know!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "Is there public transit in Terrace?"
+   Should include: minimal, limited, vehicle ownership, bus routes
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Yes, there is public transit in Terrace. The Terrace Regional Transit System is funded by BC Transit, the City of Terrace, and the Regional District of Kitimat-Stikine. It operates with a fleet that includes kneeling buses and Handy Dart shuttles, managed by Coast Mountain Bus Ltd. There are nine routes that connect various areas including Thornhill, Queensway, Kitsumkalum, the College/Halliwell, Downtown, and the Southside. Buses are equipped with bike racks, allowing for combined transit and cycling commutes.
+
+📄 **Full details**: [Transportation Master Plan](https://www.terrace.ca/media/3947)
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: Economy & Industries
+================================================================================
+
+
+📝 Question 1: "What is Terrace known for economically?"
+   Should include: forestry, logging, mining, regional service hub
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace is known for its economic activities in landscaping and business services, with local businesses like Raincoast Arboriculture and All West Trading contributing to these sectors. Need details on a specific situation? Just ask!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "What industries are here?"
+   Should include: forestry, mining, construction, healthcare, retail
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace has a strong presence in the landscaping industry, with businesses like Raincoast Arboriculture and Back40 Landscaping operating here.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "Why was it called Cedar Pole Capital?"
+   Should include: 50,000 poles, Canadian Cellulose, mid-20th century, telephone poles
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Terrace was called the Cedar Pole Capital due to the early economic drivers of sawmills and the export of cedar poles in the early 20th century. This period marked Terrace as a significant center for the forestry industry, particularly known for its cedar pole exports.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: Healthcare & New Hospital
+================================================================================
+
+
+📝 Question 1: "Tell me about the hospital in Terrace"
+   Should include: new hospital, November 2024, state-of-the-art, regional
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+I don't have information about a hospital in Terrace. However, there are several medical clinics available:
+
+1. **Nihc Northwest Integrative Healthcare Centre** at 4724 Lazelle Ave, Terrace, BC V8G 1R6
+2. **Park Avenue Medical Clinic** at 4634 Park Ave, Terrace, BC V8G 5L2
+3. **Lazelle Avenue Medical Clinic** at 4720 Lazelle Ave Unit 120, Terrace, BC V8G 1T2
+
+Phone numbers for these clinics are not available.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "When does it open?"
+   Should include: November 2024
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The Ksyen Regional Hospital is open 24/7. You can reach them at (250) 635-2211 or visit their website at https://www.northernhealth.ca for more information.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "Does it serve other communities?"
+   Should include: regional, Kitimat, Hazeltons, Prince Rupert, service hub
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+Yes, the Ksyen Regional Hospital serves not only Terrace but also other surrounding communities. It is equipped with 82 beds and offers a range of services including emergency care, acute care, maternity, surgery, renal services, adult psychiatry, laboratory, and imaging, making it a vital healthcare resource for the region. 
+
+You can reach Ksyen Regional Hospital at (250) 635-2211 or visit their website at https://www.northernhealth.ca for more information.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: Recreation & Outdoor Activities
+================================================================================
+
+
+📝 Question 1: "What outdoor activities are available in Terrace?"
+   Should include: fishing, Skeena River, skiing, hiking, trails
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+In Terrace, a variety of outdoor activities are popular among residents. The top ten activities, based on community survey results, include:
+
+- Walking, hiking, or jogging for exercise or recreation (97% of households participate)
+- Attending a farmer's market (96%)
+- Attending a festival or special event in a park (89%)
+- Visiting a park for casual activities (77%)
+- Biking on a path or road (74%)
+- Attending an organized picnic or private event in a park (61%)
+- Visiting a playground (61%)
+- Going fishing (60%)
+- Walking a dog (60%)
+- Nature appreciation, bird watching, or wildlife viewing (57%)
+
+These activities reflect the diverse ways residents enjoy the outdoors in Terrace.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "Tell me about fishing"
+   Should include: Skeena River, salmon, world-class
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+In Terrace, you can explore fishing through Skeena Wilderness Fishing Charters, located at 5131 McConnell Ave. Unfortunately, I don't have their phone number or a detailed description available. For more options or specific details about fishing in Terrace, feel free to ask!
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "What about skiing?"
+   Should include: Shames Mountain, downhill, cross-country, backcountry
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+For skiing in Terrace, you can check out Northern Escape Heli-skiing, located at 4732 Lazelle Ave. Unfortunately, I don't have their phone number available.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 4: "Is there a golf course?"
+   Should include: golf, mountain, base of mountain
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+I don't have information about a golf course in Terrace from the context provided. If you're interested in other outdoor activities, I can tell you about skiing or fishing options available here.
+────────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+🎭 SCENARIO: General City Information
+================================================================================
+
+
+📝 Question 1: "How big is Terrace?"
+   Should include: 5,958 hectares, 2,061 urban, 3,897 industrial
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The City of Terrace covers an area of 57 km².
+
+📄 **Full details**: [Transportation Master Plan](https://www.terrace.ca/media/3947)
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 2: "What is the Skeena Industrial Development Park?"
+   Should include: industrial park, south of Skeena River, airport, 3,897 hectares
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+The Skeena Industrial Development Park is not directly mentioned in the provided context. However, there is a business called Skeena Industrial Services located at 4925 Keith Ave, Terrace, BC V8G 1K7. I don't have a phone number or further details about the development park itself.
+────────────────────────────────────────────────────────────────────────────────
+
+📝 Question 3: "How many businesses are in Terrace?"
+   Should include: 1,100, over 1,000, 184 categories
+
+💬 AI Response:
+────────────────────────────────────────────────────────────────────────────────
+There are 2 businesses listed in Terrace.
+────────────────────────────────────────────────────────────────────────────────
+
+
+================================================================================
+✅ CULTURE & HISTORY TESTS COMPLETE!
+================================================================================
+
+📊 Test Coverage:
+  ✅ Indigenous knowledge & land acknowledgements
+  ✅ City history & naming origins
+  ✅ Geography & demographics
+  ✅ Kermode Bear cultural significance
+  ✅ Community events (Riverboat Days, farmers market)
+  ✅ Economic history (Cedar Pole Capital, industries)
+  ✅ Healthcare (new hospital Nov 2024)
+  ✅ Recreation & outdoor activities
+  ✅ General city facts & statistics
+
+This tests the AI's knowledge from:
+  - ONTOLOGY_MASTER.json (verified Terrace facts)
+  - TERRACE_DATA/culture_community (if uploaded)
+  - TERRACE_DATA/points_of_interest (if uploaded)
+  - BylawMetadata NARRATIVE layer (city context)

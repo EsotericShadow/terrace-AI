@@ -490,8 +490,107 @@ export class RAGSystem {
     return '';
   }
 
+  private async getMasterOntology(query: string): Promise<string> {
+    if (!this.weaviateClient) return '';
+    
+    try {
+      const ontologyCollection = this.weaviateClient.collections.get('BusinessOntology');
+      
+      // Search for master ontology (category="ALL")
+      const results = await ontologyCollection.query.fetchObjects({
+        filters: ontologyCollection.filter.byProperty('category').equal('ALL'),
+        limit: 1
+      });
+      
+      if (results.objects.length > 0) {
+        const masterOnt = results.objects[0].properties;
+        if (masterOnt.content && typeof masterOnt.content === 'string') {
+          try {
+            const ontologyData = JSON.parse(masterOnt.content);
+            const terraceOnt = ontologyData.terrace_business_ontology;
+            
+            let cityContext = '\n=== TERRACE CITY CONTEXT ===\n\n';
+            
+            // Extract relevant sections based on query
+            if (/population|people|resident|size/i.test(query)) {
+              cityContext += `Population: ${terraceOnt.demographic_context?.population?.city_limits} (city), ${terraceOnt.demographic_context?.population?.greater_terrace_area} (greater area)\n`;
+              cityContext += `Median income: $${terraceOnt.demographic_context?.population?.median_household_income}\n\n`;
+            }
+            
+            if (/indigenous|first nation|kitselas|kitsumkalum|tsimshian/i.test(query)) {
+              const indigenous = terraceOnt.demographic_context?.indigenous_context;
+              cityContext += `Indigenous Context:\n`;
+              cityContext += `- Territories: ${indigenous?.territories}\n`;
+              indigenous?.first_nations?.forEach((fn: any) => {
+                cityContext += `- ${fn.name} (${fn.affiliation})\n`;
+              });
+              cityContext += `\n`;
+            }
+            
+            if (/kermode|bear|spirit bear|wildlife/i.test(query)) {
+              const wildlife = terraceOnt.geographic_context?.natural_geography?.wildlife;
+              if (wildlife) {
+                cityContext += `Kermode (Spirit) Bear:\n`;
+                cityContext += `- ${wildlife.kermode_description}\n`;
+                cityContext += `- Significance: ${wildlife.kermode_significance}\n`;
+                cityContext += `- Habitat: ${wildlife.kermode_habitat}\n\n`;
+              }
+            }
+            
+            if (/economy|industry|economic|business|forestry|logging|mining/i.test(query)) {
+              cityContext += `Economic Foundations:\n`;
+              terraceOnt.economic_foundations?.forEach((found: any) => {
+                cityContext += `- ${found.foundation}: ${found.description?.substring(0, 150) || found.status}\n`;
+              });
+              cityContext += `\n`;
+            }
+            
+            if (/climate|weather|snow|rain|temperature/i.test(query)) {
+              const climate = terraceOnt.geographic_context?.natural_geography?.climate_characteristics;
+              if (climate) {
+                cityContext += `Climate: Temperate coastal\n`;
+                climate.forEach((c: string) => cityContext += `- ${c}\n`);
+                cityContext += `\n`;
+              }
+            }
+            
+            if (/location|distance|how far|where is/i.test(query)) {
+              const loc = terraceOnt.geographic_context?.location;
+              if (loc) {
+                cityContext += `Location:\n`;
+                cityContext += `- ${loc.region}\n`;
+                cityContext += `- ${loc.distance_to_vancouver}\n`;
+                cityContext += `- ${loc.distance_to_prince_rupert} to Prince Rupert\n`;
+                cityContext += `- ${loc.distance_to_prince_george} to Prince George\n\n`;
+              }
+            }
+            
+            if (cityContext.length > 50) {
+              console.log(`  🌍 Added master ontology context for query`);
+              return cityContext;
+            }
+          } catch (e) {
+            console.log(`  ⚠️  Could not parse master ontology: ${e}`);
+          }
+        }
+      }
+    } catch (error) {
+      // Collection might not exist yet, silently continue
+    }
+    return '';
+  }
+
   private async buildContext(context: RAGContext, userQuery: string): Promise<string> {
     let contextStr = '';
+
+    // For general information queries (not business/bylaw specific), add master ontology
+    const isGeneralInfoQuery = /history|kermode|bear|population|climate|economy|industry|why.*called|indigenous|first nation|event|riverboat|hospital/i.test(userQuery);
+    if (isGeneralInfoQuery && context.businesses.length === 0) {
+      const masterContext = await this.getMasterOntology(userQuery);
+      if (masterContext) {
+        contextStr += masterContext;
+      }
+    }
 
     if (context.businesses.length > 0) {
       contextStr += '=== BUSINESSES ===\n\n';
