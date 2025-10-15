@@ -23,6 +23,8 @@ export interface RAGContext {
     category: string;
     summary: string;
     fullContent?: string; // Full document content for detailed information
+    domain?: string; // NEW: Domain for metadata enrichment (3_CULTURE_COMMUNITY, 4_EDUCATION, etc.)
+    documentType?: string; // NEW: Type (bylaw, cultural_site, education, poi, etc.)
     score: number;
   }>;
 }
@@ -136,7 +138,7 @@ export class RAGSystem {
   async searchBusinesses(query: string, limit: number = 5): Promise<RAGContext['businesses']> {
     try {
       const client = await this.getWeaviateClient();
-      const businessCollection = client.collections.get('Business');
+      const businessCollection = client.collections.get('TerraceBusiness');
 
       // ENHANCED: Expand query with synonyms and related terms
       let enhancedQuery = query;
@@ -250,7 +252,7 @@ export class RAGSystem {
   async searchDocuments(query: string, limit: number = 5): Promise<RAGContext['documents']> {
     try {
       const client = await this.getWeaviateClient();
-      const documentCollection = client.collections.get('Document');
+      const documentCollection = client.collections.get('TerraceDocument');
 
       // ENHANCED: Expand query for specific topics
       let enhancedQuery = query;
@@ -335,6 +337,8 @@ export class RAGSystem {
           category: `${obj.properties.category} → ${obj.properties.subcategory}`,
           summary: obj.properties.summary || obj.properties.content?.substring(0, 200) || 'No summary available',
           fullContent: obj.properties.content || '', // Get FULL content for AI context
+          domain: obj.properties.domain || '', // NEW: Include domain for metadata enrichment
+          documentType: obj.properties.documentType || '', // NEW: Include document type
           score: adjustedScore,
           originalScore: baseScore,
         };
@@ -443,18 +447,29 @@ export class RAGSystem {
     if (!this.weaviateClient || !category) return '';
     
     try {
-      const ontologyCollection = this.weaviateClient.collections.get('BusinessOntology');
-      const results = await ontologyCollection.query.fetchObjects({
-        filters: ontologyCollection.filter.byProperty('category').equal(category),
-        limit: 5
+      const metadataCollection = this.weaviateClient.collections.get('TerraceMetadata');
+      // Get all business economy metadata and filter in memory
+      const results = await metadataCollection.query.fetchObjects({
+        filters: metadataCollection.filter.byProperty('domain').equal('2_BUSINESS_ECONOMY'),
+        limit: 20
       });
       
-      if (results.objects.length > 0) {
+      // Filter by category in memory
+      const categoryResults = results.objects.filter((obj: any) => 
+        obj.properties.category === category || obj.properties.category === ''
+      );
+      
+      if (categoryResults.length > 0) {
         let ontologyContext = '\n=== LOCAL CONTEXT & INTELLIGENCE ===\n\n';
-        results.objects.forEach((obj: any) => {
+        categoryResults.forEach((obj: any) => {
           const props = obj.properties;
           if (props.summary) {
             ontologyContext += `${props.summary}\n`;
+          }
+          // Extract key insights from content if it's a narrative
+          if (props.layer === 'NARRATIVE' && props.content) {
+            const preview = props.content.substring(0, 500);
+            ontologyContext += `Local Insights: ${preview}...\n\n`;
           }
         });
         return ontologyContext;
@@ -469,16 +484,19 @@ export class RAGSystem {
     if (!this.weaviateClient) return '';
     
     try {
-      const metadataCollection = this.weaviateClient.collections.get('BylawMetadata');
-      const results = await metadataCollection.query.fetchObjects({ limit: 4 });
+      const metadataCollection = this.weaviateClient.collections.get('TerraceMetadata');
+      const results = await metadataCollection.query.fetchObjects({
+        filters: metadataCollection.filter.byProperty('domain').equal('1_BYLAWS'),
+        limit: 4
+      });
       
       if (results.objects.length > 0) {
         let metaContext = '\n=== BYLAW SYSTEM CONTEXT ===\n\n';
         results.objects.forEach((obj: any) => {
           const props = obj.properties;
-          if (props.layer === 'ontology') {
+          if (props.layer === 'ONTOLOGY') {
             metaContext += 'Regulatory Categories: ' + props.summary + '\n';
-          } else if (props.layer === 'temporal') {
+          } else if (props.layer === 'TEMPORAL') {
             metaContext += 'Historical Context: ' + props.summary + '\n';
           }
         });
@@ -494,16 +512,21 @@ export class RAGSystem {
     if (!this.weaviateClient) return '';
     
     try {
-      const ontologyCollection = this.weaviateClient.collections.get('BusinessOntology');
+      const metadataCollection = this.weaviateClient.collections.get('TerraceMetadata');
       
-      // Search for master ontology (category="ALL")
-      const results = await ontologyCollection.query.fetchObjects({
-        filters: ontologyCollection.filter.byProperty('category').equal('ALL'),
-        limit: 1
+      // Search for master ontology (domain="ALL", layer="ONTOLOGY")
+      const results = await metadataCollection.query.fetchObjects({
+        filters: metadataCollection.filter.byProperty('domain').equal('ALL'),
+        limit: 5
       });
       
-      if (results.objects.length > 0) {
-        const masterOnt = results.objects[0].properties;
+      // Filter for ONTOLOGY layer in memory
+      const ontologyResults = results.objects.filter((obj: any) =>
+        obj.properties.layer === 'ONTOLOGY'
+      );
+      
+      if (ontologyResults.length > 0) {
+        const masterOnt = ontologyResults[0].properties;
         if (masterOnt.content && typeof masterOnt.content === 'string') {
           try {
             const ontologyData = JSON.parse(masterOnt.content);
@@ -580,6 +603,53 @@ export class RAGSystem {
     return '';
   }
 
+  private async getDomainMetadata(domain: string, layers: string[] = ['ONTOLOGY', 'META']): Promise<string> {
+    if (!this.weaviateClient) return '';
+    
+    try {
+      const metadataCollection = this.weaviateClient.collections.get('TerraceMetadata');
+      const results = await metadataCollection.query.fetchObjects({
+        filters: metadataCollection.filter.byProperty('domain').equal(domain),
+        limit: 10
+      });
+      
+      if (results.objects.length > 0) {
+        let domainContext = `\n=== ${domain.replace(/_/g, ' ').toUpperCase()} CONTEXT ===\n\n`;
+        
+        // Prioritize requested layers
+        const layerData = new Map<string, any[]>();
+        results.objects.forEach((obj: any) => {
+          const props = obj.properties;
+          const layer = props.layer || 'OTHER';
+          if (!layerData.has(layer)) {
+            layerData.set(layer, []);
+          }
+          layerData.get(layer)!.push(props);
+        });
+        
+        // Add summaries from each layer
+        layers.forEach(layer => {
+          if (layerData.has(layer)) {
+            const items = layerData.get(layer)!;
+            items.forEach(props => {
+              if (props.summary) {
+                domainContext += `${props.summary}\n`;
+              }
+            });
+          }
+        });
+        
+        if (domainContext.length > 100) {
+          console.log(`  📚 Added ${domain} metadata context`);
+          return domainContext;
+        }
+      }
+    } catch (error) {
+      // Collection might not exist yet, silently continue
+    }
+    return '';
+  }
+
   private async buildContext(context: RAGContext, userQuery: string): Promise<string> {
     let contextStr = '';
 
@@ -625,6 +695,16 @@ export class RAGSystem {
         const bylawMeta = await this.getBylawMetadata();
         if (bylawMeta) {
           contextStr += bylawMeta + '\n';
+        }
+      }
+      
+      // Add domain-specific metadata for cultural, education, infrastructure, etc.
+      const firstDoc = context.documents[0];
+      if (firstDoc && firstDoc.domain && firstDoc.domain !== '1_BYLAWS') {
+        // Use the domain field from the document
+        const domainMeta = await this.getDomainMetadata(firstDoc.domain);
+        if (domainMeta) {
+          contextStr += domainMeta + '\n';
         }
       }
       

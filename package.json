@@ -20,7 +20,8 @@
     "weaviate:delete-duplicates": "tsx scripts/delete-duplicates.ts",
     "bylaws:replace": "tsx scripts/replace-bylaws.ts",
     "bylaws:replace-old": "tsx scripts/replace-old-bylaws.ts",
-    "metadata:merge": "tsx scripts/merge-enhanced-metadata.ts"
+    "metadata:merge": "tsx scripts/merge-enhanced-metadata.ts",
+    "weaviate:upload-new-architecture": "tsx scripts/upload-new-architecture.ts"
   },
   "dependencies": {
     "@types/glob": "^8.1.0",
